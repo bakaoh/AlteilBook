@@ -28,7 +28,7 @@ body
     font-size: .85em;
     color: #232323;
     /*background-color: #3c2f36;*/
-    background-image:url(Images/Searchbox/drawer.png);
+    background-image:url(images/body.png);
     background-repeat: repeat;
 
     padding:0px;

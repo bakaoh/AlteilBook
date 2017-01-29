@@ -33,15 +33,16 @@
         }
 
         .flavorContainer {
-            float: left;
-            width: 137px;
-            padding: 10px;
-            position: relative;
-            height: 240px;
-            font-size: 12px;
-            line-height: 12px;
-            font-weight: bold;
-            font-size: 9px;
+          float: left;
+width: 150px;
+padding: 10px;
+padding-right: 0px;
+position: relative;
+height: 240px;
+font-size: 12px;
+line-height: 12px;
+font-weight: bold;
+font-size: 9px;
         }
 
         .specialUnitType {
@@ -97,6 +98,13 @@
             },
             observerStar: function(newValue) {
                 var cardName = Polymer.dom(this.root).querySelector(".cardName");
+                if (newValue < 0) {
+                    var exElement = document.createElement('span');
+                    exElement.innerHTML = "EX";
+                    exElement.setAttribute('style', 'color:gold; font-weight:bold; padding-left: 10px');
+                    Polymer.dom(cardName).appendChild(exElement);
+                    return;
+                }
                 for (var i = 0; i < newValue; i++) {
                     var starElement = document.createElement('span');
                     starElement.classList.add("star");
@@ -121,7 +129,7 @@
                 this.set('text', newValue.text);
             },
             pad: function(n, width = 4, z = 0) {
-                return (String(z).repeat(width) + String(n)).slice(String(n).length)
+                return (String(z).repeat(width) + String(n)).slice(String(n).length);
             }
         });
     </script>

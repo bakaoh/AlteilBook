@@ -14,11 +14,11 @@
 background-repeat: no-repeat;
 background-size: cover;
 cursor: pointer;
-        margin-left: 4px;
+        margin-left: 8px;
     }
     </style>
 
-    <iron-ajax auto url="info.txt" handle-as="json" on-response="onResponse"></iron-ajax>
+    <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax>
     </template>
 
     <script>
@@ -47,7 +47,7 @@ cursor: pointer;
                 var cardList = Polymer.dom(this.root);
                 var c = 0;
                 for (i in this.cards) {
-                    if (c++ > 100) return;
+                    if (c++ > 200) return;
                     var cardId = this.cards[i].CardId;
                     var t = document.createElement("div");
                     t.classList.add("cardThumb");
@@ -60,11 +60,10 @@ cursor: pointer;
                 'tap': 'onSelectCard',
             },
             onSelectCard: function(e) {
-                console.log(e.srcElement);
                 this.set("cardId", e.srcElement.getAttribute("card-id"));
             },
             pad: function(n, width = 4, z = 0) {
-                return (String(z).repeat(width) + String(n)).slice(String(n).length)
+                return (String(z).repeat(width) + String(n)).slice(String(n).length);
             }
         });
     </script>

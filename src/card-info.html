@@ -6,18 +6,17 @@
 <link rel="import" href="card-skill.html">
 
 <dom-module id="card-info">
-    <template>
-      <style>
-      .cardInfo {
-        width: 335px;
-      }
-      </style>
-    <iron-ajax
-    auto
-    url="info.txt"
-    handle-as="json"
-    on-response="onResponse"></iron-ajax>
 
+    <template>
+
+    <style>
+        .cardInfo {
+            /*width: 335px;*/
+            margin: 20px 10px;
+        }
+    </style>
+
+    <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax>
     <div class="cardInfo"></div>
 
     </template>
@@ -41,21 +40,23 @@
                 this.observerCid();
             },
             observerCid: function() {
-                if (this.cards==null) return;
+                var cardInfo = Polymer.dom(this.root).querySelector(".cardInfo");
+                cardInfo.innerHTML = "";
+
+                if (this.cards == null) return;
                 var card = null;
 
                 for (i in this.cards) {
-                  if (this.cards[i].CardId == this.cid) card = this.cards[i];
+                    if (this.cards[i].CardId == this.cid) card = this.cards[i];
                 }
                 if (card == null) return;
 
-                var cardInfo = Polymer.dom(this.root).querySelector(".cardInfo");
-                cardInfo.innerHTML = "";
+console.log(card);
                 var top = {
                     cid: this.cid,
                     sphere: card.Sphere,
                     name: card.Name,
-                    star: card.CardSetRarity,
+                    star: card.Rarity == "EX" ? -1 : card.CardSetRarity,
                     unitType: card.UnitType,
                     text: [card.FlavorText.Text1, card.FlavorText.Text2]
                 };
@@ -95,4 +96,5 @@
             }
         });
     </script>
+
 </dom-module>

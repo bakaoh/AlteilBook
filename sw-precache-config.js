@@ -15,6 +15,7 @@ module.exports = {
     '/index.html',
     '/manifest.json',
     '/bower_components/webcomponentsjs/webcomponents-lite.min.js',
+    '/src/cards.json'
   ],
   navigateFallback: 'index.html',
 };

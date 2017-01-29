@@ -1,43 +1,40 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
-<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="card-info.html">
 <link rel="import" href="card-list.html">
 <link rel="import" href="card-filter.html">
 
 <dom-module id="alteil-book">
+
     <template>
 
     <style include="iron-flex iron-flex-alignment">
-
-    paper-drawer-panel {
-      --paper-drawer-panel-right-drawer-container: {
-        background-color: black;
-      };
-    }
+        .container {
+            @apply(--layout-horizontal);
+            @apply(--layout-center-justified);
+        }
     </style>
 
-    <paper-drawer-panel right-drawer drawer-width="310px">
+    <paper-drawer-panel right-drawer drawer-width="270px">
         <paper-header-panel drawer>
-
             <card-filter></card-filter>
         </paper-header-panel>
         <paper-header-panel main>
-
-            <div class="layout horizontal " style="height: 100%">
-                    <card-info cid="{{cardId}}"></card-info>
-                <div class="flex-auto" style="height: 100%;overflow-y: scroll;">
-                    <card-list card-id="{{cardId}}"></card-list>
-                </div>
-            </div>
-        </paper-header-panel>
-
+            <div class="container" style="height: 100%">
+                <template is="dom-if" if="{{isShowInfo}}">
+                <card-info cid="{{cardId}}"></card-info>
+                </template>
+    <template is="dom-if" if="{{isShowList}}">
+                <card-list card-id="{{cardId}}" class="flex-auto" style="text-align: center;height: 100%;overflow-y: scroll"></card-list>
+                </template>
+    </div>
+    </paper-header-panel>
     </paper-drawer-panel>
-
+    <iron-media-query query="(min-width: 720px)" query-matches="{{isAtLeast720px}}"></iron-media-query>
 
     </template>
 
@@ -50,9 +47,21 @@
                     type: Number,
                     reflectToAttribute: true,
                     notify: true,
-                    value: 0
-                }
+                    observer: 'checkDomIf',
+                    value: -1
+                },
+                isAtLeast720px: {
+                    type: Boolean,
+                    observer: 'checkDomIf'
+                },
+                isShowInfo: Boolean,
+                isShowList: Boolean
+            },
+            checkDomIf: function() {
+                this.set('isShowInfo', this.cardId >= 0);
+                this.set('isShowList', this.isAtLeast720px || this.cardId < 0);
             }
         });
     </script>
+
 </dom-module>
