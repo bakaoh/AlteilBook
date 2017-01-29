@@ -11,12 +11,19 @@
 
     <style>
         .cardInfo {
-            /*width: 335px;*/
-            margin: 20px 10px;
+            margin: 20px 10px 0px 15px;
+        }
+        .closeButton {
+          background-image: url(css/images/close.png);
+          width: 36px;
+          height: 36px;
+          float: right;
+          cursor: pointer;
         }
     </style>
 
     <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax>
+    <div class="closeButton" on-tap="closeCard"></div>
     <div class="cardInfo"></div>
 
     </template>
@@ -26,20 +33,25 @@
             is: "card-info",
 
             properties: {
-                cid: {
+                cardId: {
                     type: Number,
-                    observer: 'observerCid'
+                    reflectToAttribute: true,
+                    notify: true,
+                    observer: 'observerCardId'
                 },
                 cards: {
                     type: Object,
                     value: null
                 }
             },
+            closeCard: function() {
+              this.set('cardId', -1);
+            },
             onResponse: function(response) {
                 this.set('cards', response.detail.response.Cards);
-                this.observerCid();
+                this.observerCardId();
             },
-            observerCid: function() {
+            observerCardId: function() {
                 var cardInfo = Polymer.dom(this.root).querySelector(".cardInfo");
                 cardInfo.innerHTML = "";
 
@@ -47,13 +59,12 @@
                 var card = null;
 
                 for (i in this.cards) {
-                    if (this.cards[i].CardId == this.cid) card = this.cards[i];
+                    if (this.cards[i].CardId == this.cardId) card = this.cards[i];
                 }
                 if (card == null) return;
-
-console.log(card);
+                console.log(card);
                 var top = {
-                    cid: this.cid,
+                    cid: this.cardId,
                     sphere: card.Sphere,
                     name: card.Name,
                     star: card.Rarity == "EX" ? -1 : card.CardSetRarity,

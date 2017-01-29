@@ -6,21 +6,17 @@
     <style>
 
     div.Search-Filter {
-    width:270px;
-    height:100%;
-    background-image:url(css/images/body.png);
-    background-repeat: repeat;
-    text-align:justify;
-    font-family:Eurostile-ExtendedTwo;
+    width: 270px;
+height: 100%;
+background-image: url(http://localhost:8080/src/css/images/hallway-background.jpg);
+background-repeat: no-repeat;
+text-align: justify;
+font-family: Eurostile-ExtendedTwo;
+background-size: contain;
+background-color: black;
 }
-
-div.Search-Values-Scroll {
-    /*margin:0px 10px;*/
-}
-
 
 div.search-row {
-  background: black;
   text-align: right;
   color: whitesmoke;
   width: 90%;
@@ -38,83 +34,41 @@ div.Value-Box {
 }
 
 
-div.Sphere {
-    text-align: justify;
-    margin: 20px 15px 5px 15px;
-    vertical-align: middle;
-    height: 36px;
-    /*padding: 0px 20px;*/
-}
+input.Sphere-Search, .Unit-Type { display:none; }
 
-label.Sphere-Button {
-    width:36px;
-    height:36px;
-    background-position:36px 0px;
-    display:inline-block;
-}
+/*card sphere*/
+div.Sphere { text-align: justify; margin: 20px 15px 10px 15px; vertical-align: middle; height: 36px; }
+label.Sphere-Button { width:36px; height:36px; background-position:36px 0px; display:inline-block; }
+.clear{ background-image:url(css/images/searchbox/clear-gem.png); }
+.multi{ background-image:url(css/images/searchbox/multi-gem.png); }
+.ref{ background-image:url(css/images/searchbox/ref-gem.png); }
+.law{ background-image:url(css/images/searchbox/law-gem.png); }
+.fal{ background-image:url(css/images/searchbox/fal-gem.png); }
+.gow{ background-image:url(css/images/searchbox/gow-gem.png); }
+input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
 
+/*card unit*/
+label.Unit-Card { width:36px; height:45px; background-position:36px 0px; display:inline-block; }
+.unit{ background-image:url(css/images/searchbox/unit-card.png); }
+.char{ background-image:url(css/images/searchbox/char-card.png); }
+.grim{ background-image:url(css/images/searchbox/grim-card.png); }
+input.Unit-Type:checked+label.Unit-Card { background-position:0px 0px; }
 
-label.Unit-Card
-{
-    width:36px;
-    height:45px;
-    background-position:36px 0px;
-    display:inline-block;
-}
-
-.transparent{
+/*.transparent{
     opacity:0.5;
-}
-
-
-.unit{
-    background-image:url(css/images/searchbox/unit-card.png)
-}
-
-.char{
-    background-image:url(css/images/searchbox/char-card.png)
-}
-
-.grim{
-    background-image:url(css/images/searchbox/grim-card.png)
-}
-
-input.Unit-Type:checked+label.Unit-Card {
-    background-position:0px 0px;
-}
-
+}*/
 
 input[type="number"]{
-    width:45%;
-    height:17px;
+    width:42%;
+    height:16px;
 }
 
-.clear{
-    background-image:url(css/images/searchbox/clear-gem.png);
-}
 
-.multi{
-    background-image:url(css/images/searchbox/multi-gem.png);
-}
-
-.ref{
-    background-image:url(css/images/searchbox/ref-gem.png);
-}
-
-.law{
-    background-image:url(css/images/searchbox/law-gem.png);
-}
-
-.fal{
-    background-image:url(css/images/searchbox/fal-gem.png);
-}
-
-.gow{
-    background-image:url(css/images/searchbox/gow-gem.png);
-}
-
-#hide {
-    display:none;
+.logo {
+  background-image:url(css/images/alteil-logo.png);
+  background-size: contain;
+width: 270px;
+height: 100px;
 }
 
 
@@ -170,17 +124,11 @@ input[type="number"]{
 }
 
 
-input.Sphere-Search:checked+label.Sphere-Button {
-    background-position:0px 0px;
-}
 
-input.Sphere-Search, .Unit-Type {
-    display:none;
-}
     </style>
 
-    <div class="Search-Filter ng-binding">
-	<div class="Title">SEARCH FILTER</div>
+    <div class="Search-Filter">
+	<div class="logo"></div>
 	<div class="Sphere">
 		<input id="Refess" type="checkbox" class="Sphere-Search">
 		<label for="Refess" class="Sphere-Button ref"></label>
@@ -197,7 +145,7 @@ input.Sphere-Search, .Unit-Type {
 		<span class="stretch"></span>
 	</div>
 	<div class="Search-Values">
-		<div id="scroll" class="Search-Values-Scroll">
+		<div id="scroll">
 
 			<div class="search-row">
 				EXPANSION:

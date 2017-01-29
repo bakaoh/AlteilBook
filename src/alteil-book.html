@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
 
+<link rel="import" href="card-model.html">
 <link rel="import" href="card-info.html">
 <link rel="import" href="card-list.html">
 <link rel="import" href="card-filter.html">
@@ -17,19 +18,29 @@
             @apply(--layout-horizontal);
             @apply(--layout-center-justified);
         }
+        card-info {
+          background: #5c667d;
+          background: linear-gradient(to bottom right, #5c667d, #5294b0);
+        }
+        card-list {
+          text-align: center;
+          height: 100%;
+          overflow-y: scroll;
+        }
     </style>
 
-    <paper-drawer-panel right-drawer drawer-width="270px">
+<card-model></card-model>
+    <paper-drawer-panel left-drawer drawer-width="270px">
         <paper-header-panel drawer>
             <card-filter></card-filter>
         </paper-header-panel>
         <paper-header-panel main>
             <div class="container" style="height: 100%">
                 <template is="dom-if" if="{{isShowInfo}}">
-                <card-info cid="{{cardId}}"></card-info>
+                <card-info card-id="{{cardId}}"></card-info>
                 </template>
     <template is="dom-if" if="{{isShowList}}">
-                <card-list card-id="{{cardId}}" class="flex-auto" style="text-align: center;height: 100%;overflow-y: scroll"></card-list>
+                <card-list card-id="{{cardId}}" class="flex-auto"></card-list>
                 </template>
     </div>
     </paper-header-panel>

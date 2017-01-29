@@ -1,0 +1,19 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="card-model">
+    <template>
+    <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax>
+    </template>
+
+    <script>
+        var cards;
+        Polymer({
+            is: "card-model",
+            onResponse: function(response) {
+                cards = response.detail.response.Cards;
+                console.log("Load cards success!");
+            }
+        });
+    </script>
+</dom-module>

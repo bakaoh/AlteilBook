@@ -128,8 +128,8 @@ font-size: 9px;
                 this.set('unitType', newValue.unitType);
                 this.set('text', newValue.text);
             },
-            pad: function(n, width = 4, z = 0) {
-                return (String(z).repeat(width) + String(n)).slice(String(n).length);
+            pad: function(n) {
+                return (String(0).repeat(4) + String(n)).slice(String(n).length);
             }
         });
     </script>
