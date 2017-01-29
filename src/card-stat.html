@@ -1,0 +1,85 @@
+<dom-module id="card-stat">
+    <template>
+    <style>
+        .statTable {
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .statTable th,
+        td {
+            border: 1px solid black;
+            font-family: 'Times New Roman';
+            font-size: 15px;
+            font-weight: bold;
+            width: 44px;
+            text-align: center;
+            line-height: 15px;
+        }
+
+        .statKey {
+            background: url(css/images/RepeaterSprite.png) repeat-x;
+        }
+
+        .sphereRefess .statKey {
+            background-position: -0px -54px;
+        }
+
+        .sphereGowen .statKey {
+            background-position: -0px -36px;
+        }
+
+        .sphereFalkow .statKey {
+            background-position: -0px -0px;
+        }
+
+        .sphereLawtia .statKey {
+            background-position: -0px -18px;
+        }
+
+        .spherePhidience .statKey {
+            background-position: -0px -72px;
+        }
+
+        .statValue {
+            background-color: white;
+            height: 22px;
+        }
+    </style>
+
+    <div>
+        <table class$="statTable sphere{{sphere}}">
+        </table>
+    </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: "card-stat",
+            properties: {
+                sphere: String,
+                stat: {
+                    type: Object,
+                    observer: 'observerStat'
+                }
+            },
+            observerStat: function(newValue) {
+                var keys = document.createElement('tr');
+                var values = document.createElement('tr');
+                for (var i in newValue) {
+                    var key = document.createElement('td');
+                    key.classList.add("statKey");
+                    key.textContent = i;
+                    Polymer.dom(keys).appendChild(key);
+                    var value = document.createElement('td');
+                    value.classList.add("statValue");
+                    value.textContent = newValue[i];
+                    Polymer.dom(values).appendChild(value);
+                }
+                var statTable = Polymer.dom(this.root).querySelector(".statTable");
+                Polymer.dom(statTable).appendChild(keys);
+                Polymer.dom(statTable).appendChild(values);
+            }
+        });
+    </script>
+</dom-module>

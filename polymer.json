@@ -1,0 +1,21 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/alteil-book.html",
+  "fragments": [
+    "src/card-filter.html",
+    "src/card-info.html",
+    "src/card-list.html",
+    "src/card-skill.html",
+    "src/card-stat.html",
+    "src/card-top.html"
+  ],
+  "sourceGlobs": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}

@@ -1,0 +1,71 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="card-list">
+    <template>
+
+    <style>
+    .cardThumb {
+        width: 50px;
+        height: 70px;
+        display: inline-block;
+        background-image: url(css/images/cardback.png);
+        background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+cursor: pointer;
+        margin-left: 4px;
+    }
+    </style>
+
+    <iron-ajax auto url="info.txt" handle-as="json" on-response="onResponse"></iron-ajax>
+    </template>
+
+    <script>
+
+
+        Polymer({
+            is: "card-list",
+
+            properties: {
+                cards: {
+                    type: Object,
+                    value: null
+                },
+                cardId: {
+                    type: Number,
+                    reflectToAttribute: true,
+                    notify: true
+                }
+            },
+            onResponse: function(response) {
+                this.set('cards', response.detail.response.Cards);
+                this.initList();
+            },
+            initList: function() {
+                if (this.cards == null) return;
+                var cardList = Polymer.dom(this.root);
+                var c = 0;
+                for (i in this.cards) {
+                    if (c++ > 100) return;
+                    var cardId = this.cards[i].CardId;
+                    var t = document.createElement("div");
+                    t.classList.add("cardThumb");
+                    t.setAttribute("style", "background-image: url(images/card/" + this.pad(cardId) + ".jpg)");
+                    t.setAttribute("card-id", cardId);
+                    cardList.appendChild(t);
+                }
+            },
+            listeners: {
+                'tap': 'onSelectCard',
+            },
+            onSelectCard: function(e) {
+                console.log(e.srcElement);
+                this.set("cardId", e.srcElement.getAttribute("card-id"));
+            },
+            pad: function(n, width = 4, z = 0) {
+                return (String(z).repeat(width) + String(n)).slice(String(n).length)
+            }
+        });
+    </script>
+</dom-module>

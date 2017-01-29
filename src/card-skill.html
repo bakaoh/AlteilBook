@@ -1,0 +1,169 @@
+<dom-module id="card-skill">
+    <template>
+  <style>
+.cardSprite {
+  background: url(css/images/CardSpriteSheet.png) no-repeat;
+}
+
+.cardSprite-Skill-Refess {
+  height: 24px;
+  background-position: -5px -45px;
+}
+
+.cardSprite-Skill-Gowen {
+  height: 24px;
+  background-position: -5px -79px;
+}
+
+.cardSprite-Skill-Lawtia {
+  height: 24px;
+  background-position: -5px -113px;
+}
+
+.cardSprite-Skill-Falkow {
+  height: 24px;
+  background-position: -5px -147px;
+}
+
+.cardSprite-Skill-Phidience {
+    height: 24px;
+    background-position: -5px -288px;
+}
+
+.skillTableWidth {
+    width: 327px;
+}
+
+.cardSprite-Skill-Rank {
+    width: 69px;
+    height: 18px;
+    background-position: -307px -181px;
+}
+
+.cardSprite-Skill-Soul {
+    width: 69px;
+    height: 18px;
+    background-position: -307px -209px;
+}
+
+.cardSprite-Skill-Start {
+    width: 69px;
+    height: 18px;
+    background-position: -307px -237px;
+}
+
+.cardSprite-Skill-Trait {
+    width: 69px;
+    height: 18px;
+    background-position: -71px -265px;
+}
+.cardSprite-Skill-Auto {
+    width: 69px;
+    height: 18px;
+    background-position: -44px -5px;
+}
+.cardSprite-Skill-Action {
+    width: 69px;
+    height: 18px;
+    background-position: -202px -5px;
+}
+.cardSprite-Skill-Open {
+    width: 69px;
+    height: 18px;
+    background-position: -303px -5px;
+}
+
+.cardSprite-Skill-Counter {
+    width: 69px;
+    height: 18px;
+    background-position: -77px -317px;
+}
+
+.cardSprite-Skill-End {
+    width: 69px;
+    height: 18px;
+    background-position: -156px -317px;
+}
+.cardSprite-Skill-Close {
+    width: 69px;
+    height: 18px;
+    background-position: -123px -5px;
+}
+.cardSkillName {
+    font-family: 'Times New Roman';
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+.skillBoxRightCap {
+    float: right;
+    padding-top: 1px;
+    padding-right:22px
+}
+
+.cardSkillSP {
+    color: white;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 14px;
+  height: 18px;
+  overflow: hidden;
+  float: right;
+}
+
+.cardSkillComment {
+    font-family: 'Helvetica';
+    font-size: 10px;
+    margin-left: 7px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    line-height: 13px;
+  color: white;
+}
+</style>
+<div class$="cardSprite cardSprite-Skill-{{sphere}}" style="clear: both; padding-left: 8px;">
+<div class$="cardSprite skillTableWidth cardSprite-Skill-{{type}}" style="float: left; margin-top: 3px;"></div>
+<div class="cardSkillName" style="float: left; vertical-align: middle; text-transform: uppercase; padding-left: 6px; padding-top: 5px;">
+  {{name}}
+</div>
+<div class="skillBoxRightCap">
+
+  <div class="cardSkillSP" style="padding-top: 3px;">
+    <div class="SPIcon"></div>
+    SP <span>{{sp}}</span>
+  </div>
+</div>
+</div>
+<div class="cardSkillComment skillTableWidth">
+{{comment}}
+</div>
+  </template>
+
+    <script>
+        Polymer({
+            is: "card-skill",
+            properties: {
+              kid: Number,
+              name:String,
+                sphere: String,
+                sp: Number,
+                comment: String,
+                type: String,
+                skill: {
+                    type: Object,
+                    observer: "observerSkill"
+                }
+            },
+            observerSkill: function(newValue) {
+                this.set('kid', newValue.kid);
+                this.set('name', newValue.name);
+                this.set('sphere', newValue.sphere);
+                this.set('sp', newValue.sp);
+                this.set('comment', newValue.comment);
+                this.set('type', newValue.type ? newValue.type: "Trait");
+            },
+        });
+    </script>
+</dom-module>

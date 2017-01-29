@@ -1,0 +1,310 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="card-filter">
+    <template>
+
+    <style>
+
+    div.Search-Filter {
+    width:310px;
+    height:100%;
+    background-image:url(css/Images/Searchbox/Search-Box.png);
+    background-image:url(css/Images/Searchbox/drawer.png);
+    background-repeat: repeat;
+    text-align:justify;
+    font-family:Eurostile-ExtendedTwo;
+}
+
+div.Search-Values-Scroll {
+    margin:0px 10px;
+}
+
+
+div.search-row {
+  background: black;
+  text-align: right;
+  color: whitesmoke;
+  width: 90%;
+  margin: auto;
+  margin-top: 2px;
+  padding-bottom: 1px;
+  font-size: 7.5pt;
+  text-transform: uppercase;
+}
+
+div.Value-Box {
+    width:57%;
+    display:inline-block;
+    text-align:left;
+}
+
+
+div.Sphere {
+    text-align: justify;
+    margin: 20px 15px 5px 15px;
+    vertical-align: middle;
+    height: 36px;
+    padding: 0px 20px;
+}
+
+label.Sphere-Button {
+    width:36px;
+    height:36px;
+    background-position:36px 0px;
+    display:inline-block;
+}
+
+
+label.Unit-Card
+{
+    width:36px;
+    height:45px;
+    background-position:36px 0px;
+    display:inline-block;
+}
+
+.transparent{
+    opacity:0.5;
+}
+
+
+.unit{
+    background-image:url(css/Images/Searchbox/unit-card.png)
+}
+
+.char{
+    background-image:url(css/Images/Searchbox/char-card.png)
+}
+
+.grim{
+    background-image:url(css/Images/Searchbox/grim-card.png)
+}
+
+input.Unit-Type:checked+label.Unit-Card {
+    background-position:0px 0px;
+}
+
+
+input[type="number"]{
+    width:45%;
+    height:17px;
+}
+
+.clear{
+    background-image:url(css/Images/Searchbox/clear-gem.png);
+}
+
+.multi{
+    background-image:url(css/Images/Searchbox/multi-gem.png);
+}
+
+.ref{
+    background-image:url(css/Images/Searchbox/ref-gem.png);
+}
+
+.law{
+    background-image:url(css/Images/Searchbox/law-gem.png);
+}
+
+.fal{
+    background-image:url(css/Images/Searchbox/fal-gem.png);
+}
+
+.gow{
+    background-image:url(css/Images/Searchbox/gow-gem.png);
+}
+
+#hide {
+    display:none;
+}
+
+
+.Rarity-Box, .Type-Box {
+    display: inline-block;
+    width: 46%;
+    margin: 5px;
+    padding-left: 9px;
+    text-align: center;
+}
+
+.Rarity-Box label{
+    font-size:8px;
+    color:#fff;
+}
+.Rarity-Box {
+    margin-left: -15px;
+    margin-top: -15px;
+}
+
+.Filter-Box input {
+    width: 84%;
+    margin: 3px 24px;
+    height:27px;
+    text-align: center;
+}
+
+.Rarity-Box input[type="radio"] {
+    position:absolute;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    -khtml-opacity:0;
+    opacity:0;
+    cursor:pointer;
+    width:25px;
+    height:24px;
+}
+
+.Rarity-Box span,star {
+    width:25px;
+    height:24px;
+    margin-left:-5px;
+    display:inline-block;
+    background:url(css/Images/Searchbox/rarity.png) no-repeat -25px 0;
+}
+
+.Rarity-Box input[type="radio"]:checked + span {
+    background-position:-25px 0;
+}
+
+.Rarity-Box input[type="radio"]:checked + span ~ span{
+    background-position:0 0;
+}
+
+
+input.Sphere-Search:checked+label.Sphere-Button {
+    background-position:0px 0px;
+}
+
+input.Sphere-Search, .Unit-Type {
+    display:none;
+}
+    </style>
+
+    <div class="Search-Filter ng-binding">
+	<div class="Title">SEARCH FILTER</div>
+	<div class="Sphere">
+		<input id="Refess" type="checkbox" class="Sphere-Search">
+		<label for="Refess" class="Sphere-Button ref"></label>
+		<input id="Lawtia" type="checkbox" class="Sphere-Search">
+		<label for="Lawtia" class="Sphere-Button law"></label>
+		<input id="Gowen" type="checkbox" class="Sphere-Search">
+		<label for="Gowen" class="Sphere-Button gow"></label>
+		<input id="Falkow" type="checkbox" class="Sphere-Search">
+		<label for="Falkow" class="Sphere-Button fal"></label>
+		<input id="Multi" type="checkbox" class="Sphere-Search">
+		<label for="Multi" class="Sphere-Button multi"></label>
+		<input id="Phidience" type="checkbox" class="Sphere-Search">
+		<label for="Phidience" class="Sphere-Button clear"></label>
+		<span class="stretch"></span>
+	</div>
+	<div class="Search-Values">
+		<div id="scroll" class="Search-Values-Scroll">
+
+			<div class="search-row">
+				EXPANSION:
+				<div class="Value-Box">
+					<select>
+              <option value="ALL">All</option>
+          </select>
+				</div>
+			</div>
+			<div class="search-row">
+				Subtype 1:
+				<div class="Value-Box">
+					<select>
+              <option value="ALL">All</option>
+          </select>
+				</div>
+			</div>
+			<div class="search-row">
+				Subtype 2:
+				<div class="Value-Box">
+					<select>
+                                <option value="ALL" >All</option>
+                            </select>
+				</div>
+			</div>
+			<div class="search-row">
+				AT:
+				<div class="Value-Box">
+					<input type="number">~<input type="number">
+				</div>
+			</div>
+			<div class="search-row">
+				AT:
+				<div class="Value-Box">
+					<input type="number">~<input type="number">
+				</div>
+			</div>
+			<div class="search-row">
+				AT:
+				<div class="Value-Box">
+					<input type="number">~<input type="number">
+				</div>
+			</div>
+			<div class="search-row">
+				AT:
+				<div class="Value-Box">
+					<input type="number">~<input type="number">
+				</div>
+			</div>
+			<div class="search-row">
+				AT:
+				<div class="Value-Box">
+					<input type="number">~<input type="number">
+				</div>
+			</div>
+			<div class="search-row">
+				AT:
+				<div class="Value-Box">
+					<input type="number">~<input type="number">
+				</div>
+			</div>
+
+		</div>
+		<div class="Type-Box">
+			<input id="Character" type="checkbox" class="Unit-Type">
+			<label for="Character" class="Unit-Card char"></label>
+			<input id="Unit" type="checkbox" class="Unit-Type">
+			<label for="Unit" class="Unit-Card unit"></label>
+			<input id="Grimoire" type="checkbox" class="Unit-Type">
+			<label for="Grimoire" class="Unit-Card grim"></label>
+		</div>
+		<div class="Rarity-Box">
+			<div>
+				<label for="EX">EX </label> <input type="checkbox" name=" ex" value="EX">
+				<label for="All">ALL RARITIES</label> <input type="checkbox" name="All" value="All">
+			</div>
+			<div>
+				<input type="radio" value="★" name="003"><span class="transparent"></span>
+				<input type="radio" value="★★" name="004"><span class="transparent"></span>
+				<input type="radio" value="★★★" name="005"><span class="transparent"></span>
+				<input type="radio" value="★★★★" name="006"><span class="transparent"></span>
+				<input type="radio" value="★★★★★" name="007" checked="checked"><span class="transparent"></span>
+			</div>
+		</div>
+		<div class="Filter-Box">
+			<input type="text" name="libfilter" placeholder="search by name, skill text, or artist...">
+		</div>
+	</div>
+</div>
+    </template>
+
+    <script>
+        Polymer({
+            is: "card-filter",
+
+            properties: {
+                cards: {
+                    type: Object,
+                    value: null
+                },
+                cardId: {
+                    type: Number,
+                    reflectToAttribute: true,
+                    notify: true
+                }
+            },
+        });
+    </script>
+</dom-module>

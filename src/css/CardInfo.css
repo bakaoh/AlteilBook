@@ -1,0 +1,727 @@
+div#CardInfoMouseOver
+{
+	position: absolute;
+	z-index: 10000;
+	pointer-events:none;
+	-webkit-transform: translateZ(3000px);
+    color:black;
+	top:-10000px;
+}
+
+div#CardInfoMouseOver.right{
+    right:10px;	
+}
+
+div#CardInfoMouseOver.left{
+    left:10px;	
+}
+
+div#CardInfoMouseOver.top{
+    top:10px;	
+}
+
+div#CardInfoMouseOver.bottom{
+	top:initial;
+    bottom:10px;	
+}
+
+.bgholder{
+    background-image:url(./images/bottom-pattern.png);
+    background-color:black;
+    position:absolute;
+    width:706px;
+    height:345px;
+    left:13px;
+    top:10px;
+    z-index:-1;
+}      
+
+
+#cardInfoMain
+{
+	overflow: hidden;
+	text-align: justify;
+}
+
+.scrollPane {
+	margin-top: 1px;
+    height:245px;
+    float:left;
+	width: 344px;
+}
+
+h4 {
+    color: #000000;
+    font-family: times new roman;
+    font-size: 17px;
+    margin: 0 0 0 0px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.paddedTop {
+    padding-top: 1px;
+}
+
+.marginTop {
+	margin-top: 10px;
+}
+
+.skillBoxRightCap {
+    float: right;    
+    padding-top: 1px;
+    padding-right:22px
+}
+
+.notActive {
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    /* IE 5-7 */
+    filter: alpha(opacity=20);
+    /* Netscape */
+    -moz-opacity: 0.2;
+    /* Safari 1.x */
+    -khtml-opacity: 0.2;
+    /* Good browsers */
+    opacity: 0.2;
+}
+/*
+    Overall wrapper around entire card info pane
+    */
+.cardSkinWrapper {
+	background-image: url(./images/CardInfoBG.png);
+	width: 733px;
+	height: 366px;
+	background-repeat: no-repeat;
+	padding-left: 25px;
+	padding-top: 20px;    
+}
+
+/*
+    Overall wrapper for the card's detailed stats
+    */
+.cardDeatilsWrapper {
+	width: 350px;
+    float: left;
+    margin-left: 0px;
+}
+
+/*
+    Wraps the grid that contains the card's basestats
+    */
+.cardStatWrapper {
+    margin-left: 50px;
+    margin-top: 0px;
+    float: left;
+    text-align: center;
+}
+
+.cardStatWrapperSecondRow {
+    margin-left: 24px;
+    float: left;
+    text-align: center;
+}
+
+.bigSphere {
+	position: absolute;
+	float: left;
+	margin-left: -2px;
+	margin-top: -11px;
+	z-index: 10;
+}
+
+.firstCellWidth {
+    width: 70px;
+    padding-left: 2px;
+}
+
+.lastCellWidth {
+    width: 45px;
+}
+
+.middleCellWidth {
+    width: 45px;
+}
+
+.skillTableWidth {
+    width: 327px;
+}
+
+/*
+Skill description is 16 px Helvetica Medium
+Flavor text is 20px Helvetica Medium
+Rarity is 20 px Times Roman
+Illustrator is 15px Times Roman
+All stats (HP, AT, ect) and their number values are 20px Times Roman
+Card type is 16 px Times Roman
+
+    */
+.cardTypeText {
+	float:left;
+    font-family: 'Times Roman';
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: bold;
+	color: white;
+	line-height: 12px;
+}
+
+.specialUnitType {
+
+    text-transform: uppercase;
+    background-color:rgb(186, 186, 187);
+    padding: 3px;
+    position:absolute;
+    bottom:0;
+    right:5px;
+}
+
+
+.cardTypePosition {
+	float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 334px;
+    text-align: right;
+}
+
+.cardSkillName {
+    font-family: 'Times New Roman';
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+.cardStats {
+    font-family: 'Times New Roman';
+    font-size: 15px;
+	font-weight: bold;
+    line-height: 15px;
+}
+
+.cardStatsValue {
+    line-height: 25px;
+}
+
+.hpPadLeft {
+	padding-left: 15px;
+}
+
+.cardSkillSP {
+    color: white;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 14px;
+	height: 18px;
+	overflow: hidden;
+	float: right;
+}
+
+.cardNameContainer {
+	padding-left: 180px;
+}
+
+.cardName {
+    font-family: 'Times';
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+	color: white;
+	line-height: 18px;
+    display:inline-block;
+}
+
+.flavor {
+    color:white;
+}
+
+.flavorContainer{
+    float:left;
+    width:176px;
+    padding:10px;
+    position:relative;
+    height:240px;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: bold;
+    font-size:9px;
+}
+
+
+
+
+.cardFlavorText {
+    width: 387px;
+}
+
+.star{
+width: 25px;
+height: 24px;
+margin: -5px;
+display: inline-block;
+background: url(./images/rarity.png) no-repeat -25px 0;
+}
+
+.cardIllustrator {
+    position:relative;
+	bottom: 60px;
+    font-family: 'Times New Roman';
+    font-size: 12px;
+    margin-top: 5px;
+	color: white;
+	line-height: 0px;
+}
+
+/*
+    Comment text of an individual skill
+    */
+.cardSkillComment {
+    font-family: 'Helvetica';
+    font-size: 10px;
+    margin-left: 7px;
+    margin-bottom: 5px;
+    line-height: 13px;
+	color: white;
+}
+
+.scroll {
+    height: 100px;
+    overflow: auto;
+}
+
+/*
+    Shows high level information that can be seen at a quick glance, such as rarity and a picture
+    */
+.cardQuickGlanceWrapper {
+	width: 173px;
+	height: 242px;
+    float: left;
+}
+
+
+div.NotInCollectionInfo::after{
+    content:"";    
+	width: 173px;
+	height: 242px;
+    background-image:url(./images/not-in-collection.png);
+    position:absolute;
+    top:20px;
+    background-size:contain;
+}
+
+
+/*
+    Shows the title details of card stats
+    */
+.cardStatHeaders {
+    width: 360px;
+    clear: both;
+}
+/*
+    Shows the number values of card stats
+    */
+.cardStatData {
+    width: 360px;
+    clear:both;
+}
+
+/*
+    Details of the card's type and subtype
+    */
+
+
+.textnew1 {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    font-family: Times New Roman;
+    font-size: 13px;
+    margin: 0 0 0 0px;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+	clear: both;
+	width: 387px;
+}
+
+
+/*
+    One character data appearing in the spehere, such as a card's level
+    */
+.sphereBigText {
+    font-family: "Times New Roman",Times,serif;
+    text-align: center;
+    font-size: 54px;
+    line-height: 44px;
+    margin-top: 6px;
+}
+
+.glow {
+}
+
+/*
+    Explenation as to what the big text means, such as "Level" or "Lv."
+    */
+.sphereSmallText {
+    text-align: center;
+    font-size: 10px;
+    line-height: 0px;
+    font-weight: bold;
+    font-family: times;
+}
+
+.rarityStarContainer {
+	background: none repeat 0 0 transparent;
+	border: 0 none;
+	font-size: 15px;
+	margin: 0;
+	outline: 0 none;
+	padding: 0;
+	padding-left: 4px;
+	vertical-align: baseline;
+}
+
+.statCell {
+    border-right: 1px inset black;
+    float: left;
+    background-color: white;
+}
+
+.floatLeft {
+	float : left;
+}
+
+.floatRight {
+	float : right;
+}
+
+/**********
+    Image Sprites
+    ******/
+
+.cardSprite {
+    background: url(./images/CardSpriteSheet.png) no-repeat;
+}
+
+.cardSprite-star {
+    width: 29px;
+    height: 30px;
+    background-position: -5px -5px;
+}
+
+.cardSprite-Skill-Refess {
+    height: 24px;
+    background-position: -5px -45px;
+}
+
+.cardSprite-Skill-Phidience {
+    height: 24px;
+    background-position: -5px -288px;
+}
+
+.cardSprite-Skill-Auto {
+    width: 69px;
+    height: 18px;
+    background-position: -44px -5px;
+}
+
+.cardSprite-Skill-Close {
+    width: 69px;
+    height: 18px;
+    background-position: -123px -5px;
+}
+
+.cardSprite-Skill-Gowen {
+    height: 24px;
+    background-position: -5px -79px;
+}
+
+.cardSprite-Skill-Lawtia {
+    height: 24px;
+    background-position: -5px -113px;
+}
+
+.cardSprite-Skill-Action {
+    width: 69px;
+    height: 18px;
+    background-position: -202px -5px;
+}
+
+.cardSprite-Skill-Falkow {
+    height: 24px;
+    background-position: -5px -147px;
+}
+
+.cardSprite-table-bg1-Gowen {
+    width: 12px;
+    height: 18px;
+    background-position: -281px -5px;
+    background-repeat: repeat-x;
+}
+
+.cardSprite-Skill-Open {
+    width: 69px;
+    height: 18px;
+    background-position: -303px -5px;
+}
+
+.cardSprite-Skill-Counter {
+    width: 69px;
+    height: 18px;
+    background-position: -77px -317px;
+}
+
+.cardSprite-Skill-End {
+    width: 69px;
+    height: 18px;
+    background-position: -156px -317px;
+}
+
+.cardSprite-Skill-Trait {
+    width: 69px;
+    height: 18px;
+    background-position: -71px -265px;
+}
+
+.cardSprite-Skill- {	/* Broken skill, perhaps a trait? Who knows? */
+    width: 69px;
+    height: 18px;
+    background-position: -71px -265px;
+}
+
+
+.cardSprite-numberSphere-Gowen {
+    width: 65px;
+    height: 64px;
+    background-position: -5px -181px;
+}
+
+.cardSprite-numberSphere-Falkow {
+    width: 65px;
+    height: 65px;
+    background-position: -80px -181px;
+}
+
+.cardSprite-numberSphere-Lawtia {
+    width: 66px;
+    height: 65px;
+    background-position: -155px -181px;
+}
+
+.cardSprite-numberSphere-Refess {
+    width: 66px;
+    height: 65px;
+    background-position: -231px -181px;
+}
+
+.cardSprite-numberSphere-Phidience {
+    width: 66px;
+    height: 65px;
+    background-position: -4px -316px;
+}
+
+/* Failsafe if the sphere is null */
+.cardSprite-numberSphere- {
+    width: 66px;
+    height: 65px;
+    background-position: -4px -316px;
+}
+
+.cardSprite-Skill-Rank {
+    width: 69px;
+    height: 18px;
+    background-position: -307px -181px;
+}
+
+.cardSprite-Skill-Soul {
+    width: 69px;
+    height: 18px;
+    background-position: -307px -209px;
+}
+
+.cardSprite-Skill-Start {
+    width: 69px;
+    height: 18px;
+    background-position: -307px -237px;
+}
+
+.cardSprite-table-bg1-Falkow {
+    width: 12px;
+    height: 18px;
+    background-position: -5px -265px;
+}
+
+.cardSprite-table-bg1-Lawtia {
+    width: 12px;
+    height: 18px;
+    background-position: -27px -265px;
+}
+
+.cardSprite-table-bg1-Refess {
+    width: 12px;
+    height: 18px;
+    background-position: -49px -265px;
+}
+
+.cardSprite-table-bg1-Phidience {
+    width: 12px;
+    height: 18px;
+    background-position: -232px -318px;
+}
+
+.cardSprite-table-bg1- {
+    width: 12px;
+    height: 18px;
+    background-position: -232px -318px;
+}
+
+.cardSprite-Skill-Trait {
+    width: 69px;
+    height: 18px;
+    background-position: -71px -265px;
+}
+
+.repeaterSprite {
+    background: url(./images/RepeaterSprite.png) repeat-x;
+    display: block;
+}
+
+.repeaterSprite-Falkow {
+    height: 18px;
+    background-position: -0px -0px;
+}
+
+.repeaterSprite-Lawtia {
+    height: 18px;
+    background-position: -0px -18px;
+}
+
+.repeaterSprite-Gowen {
+    height: 18px;
+    background-position: -0px -36px;
+}
+
+.repeaterSprite-Refess {
+    height: 18px;
+    background-position: -0px -54px;
+}
+
+.repeaterSprite-Phidience {
+    height: 18px;
+    background-position: -0px -72px;
+}
+
+.repeaterSprite- {
+    height: 18px;
+    background-position: -0px -72px;
+}
+
+/* Start by setting display:none to make cthis hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 255, 255, 255, .8 ) url('./images/LoadSpinner.gif) 50% 50% no-repeat;
+}
+
+    /* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+    body.loading {
+        overflow: hidden;
+    }
+
+        /* Anytime the body has the loading class, our
+   modal element will be visible */
+        body.loading .modal {
+            display: block;
+        }
+
+.tableSprite {
+    background: url(./images/tableBottomRepeater.png);
+    display: block;
+    background-repeat: repeat-x;
+}
+
+.tableSprite-Falkow-statbar-bottom {
+    height: 3px;
+    background-position: -0px -0px;
+    background-repeat: repeat-x;
+}
+
+.tableSprite-Gowen-statbar-bottom {
+    height: 3px;
+    background-position: -0px -3px;
+    background-repeat: repeat-x;
+}
+
+.tableSprite-Lawtia-statbar-bottom {
+    height: 3px;
+    background-position: -0px -6px;
+    background-repeat: repeat-x;
+}
+
+.tableSprite-Refess-statbar-bottom {
+    height: 3px;
+    background-position: -0px -9px;
+    background-repeat: repeat-x;
+}
+
+.tableSprite-Phidience-statbar-bottom {
+    height: 3px;
+    background-position: -0px -12px;
+    background-repeat: repeat-x;
+}
+
+.tabbleBottom {
+    height: 3px;
+    background-color: transparent;
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
+    float: left;
+}
+
+.tabbleBottomWidth {
+    max-width: 336px;
+}
+
+.tableBottomCellBorder {
+    border: solid 1px black;
+}
+
+.cardStatsHeader {
+	line-height: 15px;
+}
+
+
+
+.cardRarity {
+    font-family: times;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-top: 4px;
+    padding-left: 6px;
+}
+
+.rarityHR {
+	width: 200px;
+	background-color: black;
+	height: 1px;
+	border: double 1px black;
+}
+
+.SPIcon{
+	width:11px;
+	height:16px;
+	background: url(./images/SP-mark.png);
+	display:inline-block;
+	margin-bottom:-3px;
+
+}

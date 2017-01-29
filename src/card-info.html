@@ -1,0 +1,98 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="card-top.html">
+<link rel="import" href="card-stat.html">
+<link rel="import" href="card-skill.html">
+
+<dom-module id="card-info">
+    <template>
+      <style>
+      .cardInfo {
+        width: 335px;
+      }
+      </style>
+    <iron-ajax
+    auto
+    url="info.txt"
+    handle-as="json"
+    on-response="onResponse"></iron-ajax>
+
+    <div class="cardInfo"></div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "card-info",
+
+            properties: {
+                cid: {
+                    type: Number,
+                    observer: 'observerCid'
+                },
+                cards: {
+                    type: Object,
+                    value: null
+                }
+            },
+            onResponse: function(response) {
+                this.set('cards', response.detail.response.Cards);
+                this.observerCid();
+            },
+            observerCid: function() {
+                if (this.cards==null) return;
+                var card = null;
+
+                for (i in this.cards) {
+                  if (this.cards[i].CardId == this.cid) card = this.cards[i];
+                }
+                if (card == null) return;
+
+                var cardInfo = Polymer.dom(this.root).querySelector(".cardInfo");
+                cardInfo.innerHTML = "";
+                var top = {
+                    cid: this.cid,
+                    sphere: card.Sphere,
+                    name: card.Name,
+                    star: card.CardSetRarity,
+                    unitType: card.UnitType,
+                    text: [card.FlavorText.Text1, card.FlavorText.Text2]
+                };
+                var cardTop = document.createElement('card-top');
+                cardTop.setAttribute("top", JSON.stringify(top));
+                cardInfo.appendChild(cardTop);
+
+                var stat = {
+                    "LV": card.BaseStats.Level,
+                    "HP": card.BaseStats.HP,
+                    "AT": card.BaseStats.AT,
+                    "DF": card.BaseStats.DF,
+                    "AGI": card.BaseStats.AGI,
+                    "RNG": card.BaseStats.RNG,
+                    "LP": card.BaseStats.LP
+                };
+                var cardStat = document.createElement('card-stat');
+                cardStat.setAttribute("stat", JSON.stringify(stat));
+                cardStat.setAttribute("sphere", card.Sphere);
+                cardInfo.appendChild(cardStat);
+
+                for (s in card.Skills) {
+                    if ((s != "Soul" && !s.startsWith("Skill")) || card.Skills[s] == null) continue;
+                    var skill = card.Skills[s];
+                    var skillInfo = {
+                        sphere: card.Sphere,
+                        comment: skill.Comment,
+                        kid: skill.Id,
+                        name: skill.Name,
+                        sp: skill.SP,
+                        type: skill.Type
+                    }
+                    var cardSkill = document.createElement('card-skill');
+                    cardSkill.setAttribute("skill", JSON.stringify(skillInfo));
+                    cardInfo.appendChild(cardSkill);
+                }
+            }
+        });
+    </script>
+</dom-module>
