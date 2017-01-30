@@ -3,16 +3,68 @@
 
 <dom-module id="card-model">
     <template>
-    <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax>
+    <!-- <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax> -->
     </template>
 
+    <script type="text/javascript" src="data.json"></script>
     <script>
-        var cards;
+        var CardModel = {
+            dataUrl: "cards.json",
+            getCards: function() {
+              return cardJson;
+            }
+        };
         Polymer({
             is: "card-model",
             onResponse: function(response) {
-                cards = response.detail.response.Cards;
+
+                var mycards = {};
+                var cards = response.detail.response.Cards;
                 console.log("Load cards success!");
+                for (i in cards) {
+                  // if (i > 10) break;
+                    var card = cards[i];
+                    if (card.CardId != card.RealID) continue;
+                    // console.log(card);
+                    mycards[card.CardId] = {
+                        cid: card.RealID,
+                        sphere: card.Sphere,
+                        name: card.Name,
+                        expansion: card.Expansion,
+                        star: card.Rarity == "EX" ? -1 : card.CardSetRarity,
+                        unitType: card.UnitType == "Unnamed" ? "Unit" : card.UnitType,
+                        subType1: card.SubType1,
+                        subType2: card.SubType2,
+                        texts: [card.FlavorText.Text1, card.FlavorText.Text2],
+                        stats: {
+                          "LV": card.BaseStats.Level,
+                          "HP": card.BaseStats.HP,
+                          "AT": card.BaseStats.AT,
+                          "DF": card.BaseStats.DF,
+                          "AGI": card.BaseStats.AGI,
+                          "RNG": card.BaseStats.RNG,
+                          "LP": card.BaseStats.LP
+                        },
+                        illustrator: card.Illustrator
+                    };
+
+                    var myskill = [];
+                    for (s in card.Skills) {
+                        if ((s != "Soul" && !s.startsWith("Skill")) || card.Skills[s] == null) continue;
+                        var skill = card.Skills[s];
+                        var skillInfo = {
+                            comment: skill.Comment,
+                            kid: skill.Id,
+                            name: skill.Name,
+                            sp: skill.SP,
+                            type: skill.Type
+                        }
+                        myskill.push(skillInfo);
+                    }
+                    mycards[card.CardId].skills = myskill;
+                }
+                console.log("var cardJson ='" + JSON.stringify(mycards) + "';");
+                // Polymer.dom(this.root).innerHTML = "aaa";
             }
         });
     </script>

@@ -1,5 +1,4 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="card-model.html">
 
 <dom-module id="card-list">
@@ -19,7 +18,6 @@ cursor: pointer;
     }
     </style>
 
-    <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax>
     </template>
 
     <script>
@@ -29,29 +27,25 @@ cursor: pointer;
             is: "card-list",
 
             properties: {
-                cards: {
-                    type: Object,
-                    value: null
-                },
                 cardId: {
                     type: Number,
                     reflectToAttribute: true,
                     notify: true
                 }
             },
-            onResponse: function(response) {
-                this.set('cards', response.detail.response.Cards);
+            created: function(response) {
                 this.initList();
             },
             initList: function() {
-                if (this.cards == null) return;
+              console.log(CardModel);
+                if (CardModel.cards == null) return;
                 var cardList = Polymer.dom(this.root);
                 var c = 0;
                 var isFirst = true;
-                for (i in this.cards) {
-                  if (this.cards[i].CardId != this.cards[i].RealID) continue;
+                for (i in CardModel.cards) {
+                  if (CardModel.cards[i].CardId != CardModel.cards[i].RealID) continue;
                     if (c++ > 100) return;
-                    var cardId = this.cards[i].CardId;
+                    var cardId = CardModel.cards[i].CardId;
                     var t = document.createElement("div");
                     t.classList.add("cardThumb");
                     var style = "background-image: url(images/card/" + this.pad(cardId) + ".jpg)";
