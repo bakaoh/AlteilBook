@@ -7,7 +7,8 @@
     "src/card-list.html",
     "src/card-skill.html",
     "src/card-stat.html",
-    "src/card-top.html"
+    "src/card-top.html",
+    "src/card-model.html"
   ],
   "sourceGlobs": [
     "src/**/*",

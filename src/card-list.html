@@ -46,13 +46,14 @@ cursor: pointer;
                 cardList.innerHTML = "";
 
                 var isFirst = true;
+                var count = 0;
                 for (i in cards) {
                   if (this.isOK(cards[i])) {
-
+                    if (count++ > 200) break;
                     var cardId = cards[i].cid;
                     var t = document.createElement("div");
                     t.classList.add("cardThumb");
-                    var style = "background-image: url(images/card/" + this.pad(cardId) + ".jpg)";
+                    var style = "background-image: url(http://tinyink.com.vn/ab/images/" + this.pad(cardId) + ".jpg)";
                     if (isFirst) {
                       style = "margin-top:10px;" + style;
                       isFirst = false;
@@ -65,7 +66,6 @@ cursor: pointer;
                 }
             },
             isOK: function(card) {
-              // if (card.cid > 100) return false;
               if (this.filter == "") return true;
               if (this.curFilter.expansion != "All" && this.curFilter.expansion != card.expansion) return false;
               if (this.curFilter.subtype1 != "All" && this.curFilter.subtype1 != card.subType1) return false;

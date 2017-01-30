@@ -11,10 +11,16 @@
 /* eslint-env node */
 
 module.exports = {
-  staticFileGlobs: [
-    '/index.html',
-    '/manifest.json',
-    '/bower_components/webcomponentsjs/webcomponents-lite.min.js'
-  ],
-  navigateFallback: 'index.html',
+    staticFileGlobs: [
+        '/index.html',
+        '/manifest.json',
+        '/bower_components/webcomponentsjs/webcomponents-lite.min.js',
+        '/src/data.json',
+        '/src/css/**/*'
+    ],
+    navigateFallback: 'index.html',
+    // runtimeCaching: [{
+    //     urlPattern: /^http:\/\/tinyink\.com\.vn\/ab/,
+    //     handler: 'fastest'
+    // }]
 };
