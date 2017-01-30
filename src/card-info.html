@@ -1,5 +1,4 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="card-top.html">
 <link rel="import" href="card-stat.html">
@@ -22,7 +21,6 @@
         }
     </style>
 
-    <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax>
     <div class="closeButton" on-tap="closeCard"></div>
     <div class="cardInfo"></div>
 
@@ -38,70 +36,44 @@
                     reflectToAttribute: true,
                     notify: true,
                     observer: 'observerCardId'
-                },
-                cards: {
-                    type: Object,
-                    value: null
                 }
             },
             closeCard: function() {
               this.set('cardId', -1);
             },
-            onResponse: function(response) {
-                this.set('cards', response.detail.response.Cards);
-                this.observerCardId();
-            },
             observerCardId: function() {
                 var cardInfo = Polymer.dom(this.root).querySelector(".cardInfo");
                 cardInfo.innerHTML = "";
 
-                if (this.cards == null) return;
-                var card = null;
-
-                for (i in this.cards) {
-                    if (this.cards[i].CardId == this.cardId) card = this.cards[i];
-                }
+                var cards = CardModel.cards;
+                if (cards == null) return;
+                var card = cards[this.cardId];
                 if (card == null) return;
-                console.log(card);
+
                 var top = {
-                    cid: this.cardId,
-                    sphere: card.Sphere,
-                    name: card.Name,
-                    star: card.Rarity == "EX" ? -1 : card.CardSetRarity,
-                    unitType: card.UnitType,
-                    text: [card.FlavorText.Text1, card.FlavorText.Text2]
+                    cid: card.cid,
+                    sphere: card.sphere,
+                    name: card.name,
+                    star: card.star,
+                    unitType: card.unitType,
+                    text: card.texts
                 };
+
                 var cardTop = document.createElement('card-top');
                 cardTop.setAttribute("top", JSON.stringify(top));
                 cardInfo.appendChild(cardTop);
 
-                var stat = {
-                    "LV": card.BaseStats.Level,
-                    "HP": card.BaseStats.HP,
-                    "AT": card.BaseStats.AT,
-                    "DF": card.BaseStats.DF,
-                    "AGI": card.BaseStats.AGI,
-                    "RNG": card.BaseStats.RNG,
-                    "LP": card.BaseStats.LP
-                };
+                var stat = card.stats;
                 var cardStat = document.createElement('card-stat');
                 cardStat.setAttribute("stat", JSON.stringify(stat));
-                cardStat.setAttribute("sphere", card.Sphere);
+                cardStat.setAttribute("sphere", card.sphere);
                 cardInfo.appendChild(cardStat);
 
-                for (s in card.Skills) {
-                    if ((s != "Soul" && !s.startsWith("Skill")) || card.Skills[s] == null) continue;
-                    var skill = card.Skills[s];
-                    var skillInfo = {
-                        sphere: card.Sphere,
-                        comment: skill.Comment,
-                        kid: skill.Id,
-                        name: skill.Name,
-                        sp: skill.SP,
-                        type: skill.Type
-                    }
+                for (s in card.skills) {
+                    var skill = card.skills[s];
+                    skill.sphere = card.sphere;
                     var cardSkill = document.createElement('card-skill');
-                    cardSkill.setAttribute("skill", JSON.stringify(skillInfo));
+                    cardSkill.setAttribute("skill", JSON.stringify(skill));
                     cardInfo.appendChild(cardSkill);
                 }
             }

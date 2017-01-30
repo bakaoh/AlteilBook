@@ -32,7 +32,7 @@
 <card-model></card-model>
     <paper-drawer-panel left-drawer drawer-width="270px">
         <paper-header-panel drawer>
-            <card-filter></card-filter>
+            <card-filter current="{{filter}}"></card-filter>
         </paper-header-panel>
         <paper-header-panel main>
             <div class="container" style="height: 100%">
@@ -40,7 +40,7 @@
                 <card-info card-id="{{cardId}}"></card-info>
                 </template>
     <template is="dom-if" if="{{isShowList}}">
-                <card-list card-id="{{cardId}}" class="flex-auto"></card-list>
+                <card-list card-id="{{cardId}}" filter="{{filter}}" class="flex-auto"></card-list>
                 </template>
     </div>
     </paper-header-panel>
@@ -60,6 +60,10 @@
                     notify: true,
                     observer: 'checkDomIf',
                     value: -1
+                },
+                filter: {
+                    type: String,
+                    notify: true
                 },
                 isAtLeast720px: {
                     type: Boolean,

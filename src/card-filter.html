@@ -150,63 +150,42 @@ height: 100px;
 			<div class="search-row">
 				EXPANSION:
 				<div class="Value-Box">
-					<select>
-              <option value="ALL">All</option>
+          <select on-change="expansionChange">
+            <template is="dom-repeat" items="{{expansions}}">
+              <option value="{{item}}">{{item}}</option>
+              </template>
           </select>
-				</div>
+        </div>
 			</div>
 			<div class="search-row">
 				Subtype 1:
 				<div class="Value-Box">
-					<select>
-              <option value="ALL">All</option>
+          <select on-change="subtype1Change">
+            <template is="dom-repeat" items="{{subtype1}}">
+              <option value="{{item}}">{{item}}</option>
+              </template>
           </select>
-				</div>
+        </div>
 			</div>
 			<div class="search-row">
 				Subtype 2:
-				<div class="Value-Box">
-					<select>
-                                <option value="ALL" >All</option>
-                            </select>
-				</div>
+        <div class="Value-Box">
+          <select on-change="subtype2Change">
+            <template is="dom-repeat" items="{{subtype2}}">
+              <option value="{{item}}">{{item}}</option>
+              </template>
+          </select>
+        </div>
 			</div>
+      <template is="dom-repeat" items="{{filters}}">
 			<div class="search-row">
-				AT:
+				{{item.key}}:
 				<div class="Value-Box">
-					<input type="number">~<input type="number">
+					<input name$="{{item.key}}" on-change="statMinChange" value="{{item.min}}" type="number">~
+          <input name$="{{item.key}}" on-change="statMaxChange" value="{{item.max}}" type="number">
 				</div>
 			</div>
-			<div class="search-row">
-				AT:
-				<div class="Value-Box">
-					<input type="number">~<input type="number">
-				</div>
-			</div>
-			<div class="search-row">
-				AT:
-				<div class="Value-Box">
-					<input type="number">~<input type="number">
-				</div>
-			</div>
-			<div class="search-row">
-				AT:
-				<div class="Value-Box">
-					<input type="number">~<input type="number">
-				</div>
-			</div>
-			<div class="search-row">
-				AT:
-				<div class="Value-Box">
-					<input type="number">~<input type="number">
-				</div>
-			</div>
-			<div class="search-row">
-				AT:
-				<div class="Value-Box">
-					<input type="number">~<input type="number">
-				</div>
-			</div>
+    </template>
 
 		</div>
 		<div class="Type-Box">
@@ -223,10 +202,10 @@ height: 100px;
 				<label for="All">ALL RARITIES</label> <input type="checkbox" name="All" value="All">
 			</div>
 			<div>
-				<input type="radio" value="★" name="003"><span class="transparent"></span>
-				<input type="radio" value="★★" name="004"><span class="transparent"></span>
-				<input type="radio" value="★★★" name="005"><span class="transparent"></span>
-				<input type="radio" value="★★★★" name="006"><span class="transparent"></span>
+				<input type="radio" checked></span>
+        <input type="radio" checked></span>
+        <input type="radio" checked></span>
+        <input type="radio" checked></span>
 				<input type="radio" value="★★★★★" name="007" checked="checked"><span class="transparent"></span>
 			</div>
 		</div>
@@ -242,16 +221,61 @@ height: 100px;
             is: "card-filter",
 
             properties: {
-                cards: {
-                    type: Object,
-                    value: null
-                },
-                cardId: {
-                    type: Number,
-                    reflectToAttribute: true,
-                    notify: true
+                current: {
+                  type: String,
+                  reflectToAttribute: true,
+                  notify: true,
+                  value: ""
                 }
             },
+            cur: {
+              expansion: "All",
+              subtype1: "All",
+              subtype2: "All",
+              stats: [
+                {key: "LV", min: 0, max: 9},
+                {key: "HP", min: 0, max: 9999},
+                {key: "AT", min: 0, max: 9999},
+                {key: "DF", min: 0, max: 9999},
+                {key: "AGI", min: 0, max: 9999},
+                {key: "RNG", min: 0, max: 9999},
+                {key: "LP", min: 0, max: 3}
+              ]
+            },
+            expansionChange: function(e) {
+              this.cur.expansion = e.srcElement.value;
+              this.set('current', JSON.stringify(this.cur));
+            },
+            subtype1Change: function(e) {
+              this.cur.subtype1 = e.srcElement.value;
+              this.set('current', JSON.stringify(this.cur));
+            },
+            subtype2Change: function(e) {
+              this.cur.subtype2 = e.srcElement.value;
+              this.set('current', JSON.stringify(this.cur));
+            },
+            statMinChange: function(e) {
+              e.srcElement.value = Number(e.srcElement.value);
+              for (let item of this.cur.stats) {
+                if (item.key == e.srcElement.name)
+                  item.min = e.srcElement.value;
+              }
+              this.set('current', JSON.stringify(this.cur));
+            },
+            statMaxChange: function(e) {
+              e.srcElement.value = Number(e.srcElement.value);
+              for (let item of this.cur.stats) {
+                if (item.key == e.srcElement.name)
+                  item.max = e.srcElement.value;
+              }
+              this.set('current', JSON.stringify(this.cur));
+            },
+            attached: function() {
+              this.expansions = Array.from(CardModel.expansions);
+              this.subtype1 = Array.from(CardModel.subType1s);
+              this.subtype2 = Array.from(CardModel.subType2s);
+              this.filters = this.cur.stats;
+            }
         });
     </script>
 </dom-module>

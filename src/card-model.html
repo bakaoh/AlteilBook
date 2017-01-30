@@ -1,28 +1,37 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-
 <dom-module id="card-model">
-    <template>
-    <!-- <iron-ajax auto url="cards.json" handle-as="json" on-response="onResponse"></iron-ajax> -->
-    </template>
-
     <script type="text/javascript" src="data.json"></script>
     <script>
         var CardModel = {
             dataUrl: "cards.json",
-            getCards: function() {
-              return cardJson;
+            cards: cardJson,
+            expansions: new Set(),
+            subType1s: new Set(),
+            subType2s: new Set(),
+            init: function() {
+              this.expansions.add("All");
+              this.subType1s.add("All");
+              this.subType2s.add("All");
+              for (i in this.cards) {
+                var card = this.cards[i];
+                this.expansions.add(card.expansion);
+                this.subType1s.add(card.subType1);
+                this.subType2s.add(card.subType2);
+              }
             }
         };
         Polymer({
             is: "card-model",
-            onResponse: function(response) {
+            attached: function() {
+              CardModel.init();
+            },
+            reformat: function(response) {
 
                 var mycards = {};
                 var cards = response.detail.response.Cards;
                 console.log("Load cards success!");
                 for (i in cards) {
-                  // if (i > 10) break;
+                    // if (i > 10) break;
                     var card = cards[i];
                     if (card.CardId != card.RealID) continue;
                     // console.log(card);
@@ -37,13 +46,13 @@
                         subType2: card.SubType2,
                         texts: [card.FlavorText.Text1, card.FlavorText.Text2],
                         stats: {
-                          "LV": card.BaseStats.Level,
-                          "HP": card.BaseStats.HP,
-                          "AT": card.BaseStats.AT,
-                          "DF": card.BaseStats.DF,
-                          "AGI": card.BaseStats.AGI,
-                          "RNG": card.BaseStats.RNG,
-                          "LP": card.BaseStats.LP
+                            "LV": card.BaseStats.Level,
+                            "HP": card.BaseStats.HP,
+                            "AT": card.BaseStats.AT,
+                            "DF": card.BaseStats.DF,
+                            "AGI": card.BaseStats.AGI,
+                            "RNG": card.BaseStats.RNG,
+                            "LP": card.BaseStats.LP
                         },
                         illustrator: card.Illustrator
                     };

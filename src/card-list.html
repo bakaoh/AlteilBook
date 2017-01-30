@@ -1,6 +1,4 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="card-model.html">
-
 <dom-module id="card-list">
     <template>
 
@@ -31,21 +29,27 @@ cursor: pointer;
                     type: Number,
                     reflectToAttribute: true,
                     notify: true
+                },
+                filter: {
+                  type: String,
+                  observer: 'observerFilter'
                 }
             },
-            created: function(response) {
+            attached: function(response) {
                 this.initList();
             },
             initList: function() {
-              console.log(CardModel);
-                if (CardModel.cards == null) return;
+                var cards = CardModel.cards;
+
+                if (cards == null) return;
                 var cardList = Polymer.dom(this.root);
-                var c = 0;
+                cardList.innerHTML = "";
+
                 var isFirst = true;
-                for (i in CardModel.cards) {
-                  if (CardModel.cards[i].CardId != CardModel.cards[i].RealID) continue;
-                    if (c++ > 100) return;
-                    var cardId = CardModel.cards[i].CardId;
+                for (i in cards) {
+                  if (this.isOK(cards[i])) {
+
+                    var cardId = cards[i].cid;
                     var t = document.createElement("div");
                     t.classList.add("cardThumb");
                     var style = "background-image: url(images/card/" + this.pad(cardId) + ".jpg)";
@@ -55,11 +59,29 @@ cursor: pointer;
                     }
                     t.setAttribute("style", style);
                     t.setAttribute("card-id", cardId);
+
                     cardList.appendChild(t);
+                  }
                 }
+            },
+            isOK: function(card) {
+              // if (card.cid > 100) return false;
+              if (this.filter == "") return true;
+              if (this.curFilter.expansion != "All" && this.curFilter.expansion != card.expansion) return false;
+              if (this.curFilter.subtype1 != "All" && this.curFilter.subtype1 != card.subType1) return false;
+              if (this.curFilter.subtype2 != "All" && this.curFilter.subtype2 != card.subType2) return false;
+              for (var i in this.curFilter.stats) {
+                var key = this.curFilter.stats[i].key;
+                if (card.stats[key] < this.curFilter.stats[i].min || card.stats[key] > this.curFilter.stats[i].max) return false;
+              }
+              return true;
             },
             listeners: {
                 'tap': 'onSelectCard',
+            },
+            observerFilter: function(newValue) {
+              this.curFilter = newValue != "" ? JSON.parse(newValue) : {};
+              this.initList();
             },
             onSelectCard: function(e) {
                 this.set("cardId", e.srcElement.getAttribute("card-id"));
