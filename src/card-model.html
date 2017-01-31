@@ -1,5 +1,31 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <dom-module id="card-model">
+  <style>
+  ::-webkit-scrollbar
+  {
+      width: 6px;
+  }
+
+  ::-webkit-scrollbar-track
+  {
+      -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb
+  {
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      background: #ADADAD;
+      -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+  }
+
+  ::-webkit-scrollbar-thumb:window-inactive
+  {
+    background: #C2C2C2;
+  }
+  </style>
     <script type="text/javascript" src="data.json"></script>
     <script>
         var CardModel = {
@@ -8,7 +34,7 @@
             expansions: new Set(),
             subType1s: new Set(),
             subType2s: new Set(),
-            raritys: ["All", "Ex", 0, 1, 2, 3, 4, 5],
+            raritys: ["All", "Ex", "★", "★★", "★★★", "★★★★", "★★★★★"],
             unitTypes: ["All", "Character", "Unit", "Grimoire"],
             init: function() {
               this.expansions.add("All");

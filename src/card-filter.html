@@ -13,7 +13,6 @@ background-repeat: no-repeat;
 text-align: justify;
 font-family: Eurostile-ExtendedTwo;
 background-size: contain;
-background-color: black;
 }
 
 div.search-row {
@@ -59,8 +58,15 @@ input.Unit-Type:checked+label.Unit-Card { background-position:0px 0px; }
 }*/
 
 input[type="number"]{
-    width:42%;
-    height:16px;
+  width: 41%;
+  height: 14px;
+}
+
+option, select {
+    color: black;
+    font-family: helvetica;
+    font-size: 10pt;
+    width: 95%;
 }
 
 
@@ -91,7 +97,7 @@ height: 100px;
 
 .Filter-Box input {
     width: 84%;
-    margin: 3px 24px;
+    margin: 10px 24px 20px 24px;
     height:27px;
     text-align: center;
 }
@@ -130,17 +136,17 @@ height: 100px;
     <div class="Search-Filter">
 	<div class="logo"></div>
 	<div class="Sphere">
-		<input id="Refess" type="checkbox" class="Sphere-Search">
+		<input id="Refess" type="checkbox" class="Sphere-Search" checked>
 		<label for="Refess" class="Sphere-Button ref"></label>
-		<input id="Lawtia" type="checkbox" class="Sphere-Search">
+		<input id="Lawtia" type="checkbox" class="Sphere-Search" checked>
 		<label for="Lawtia" class="Sphere-Button law"></label>
-		<input id="Gowen" type="checkbox" class="Sphere-Search">
+		<input id="Gowen" type="checkbox" class="Sphere-Search" checked>
 		<label for="Gowen" class="Sphere-Button gow"></label>
-		<input id="Falkow" type="checkbox" class="Sphere-Search">
+		<input id="Falkow" type="checkbox" class="Sphere-Search" checked>
 		<label for="Falkow" class="Sphere-Button fal"></label>
-		<input id="Multi" type="checkbox" class="Sphere-Search">
+		<input id="Multi" type="checkbox" class="Sphere-Search" checked>
 		<label for="Multi" class="Sphere-Button multi"></label>
-		<input id="Phidience" type="checkbox" class="Sphere-Search">
+		<input id="Phidience" type="checkbox" class="Sphere-Search" checked>
 		<label for="Phidience" class="Sphere-Button clear"></label>
 		<span class="stretch"></span>
 	</div>
@@ -180,8 +186,18 @@ height: 100px;
       <div class="search-row">
 				Rarity:
 				<div class="Value-Box">
-          <select on-change="expansionChange">
+          <select on-change="rarityChange">
             <template is="dom-repeat" items="{{rarity}}">
+              <option value="{{item}}">{{item}}</option>
+              </template>
+          </select>
+        </div>
+			</div>
+      <div class="search-row">
+				Unit Type:
+				<div class="Value-Box">
+          <select on-change="unittypeChange">
+            <template is="dom-repeat" items="{{unittype}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
@@ -189,7 +205,7 @@ height: 100px;
 			</div>
       <template is="dom-repeat" items="{{filters}}">
 			<div class="search-row">
-				{{item.key}}:
+				{{item.name}}:
 				<div class="Value-Box">
 					<input name$="{{item.key}}" on-change="statMinChange" value="{{item.min}}" type="number">~
           <input name$="{{item.key}}" on-change="statMaxChange" value="{{item.max}}" type="number">
@@ -198,29 +214,9 @@ height: 100px;
     </template>
 
 		</div>
-		<div class="Type-Box">
-			<input id="Character" type="checkbox" class="Unit-Type">
-			<label for="Character" class="Unit-Card char"></label>
-			<input id="Unit" type="checkbox" class="Unit-Type">
-			<label for="Unit" class="Unit-Card unit"></label>
-			<input id="Grimoire" type="checkbox" class="Unit-Type">
-			<label for="Grimoire" class="Unit-Card grim"></label>
-		</div>
-		<div class="Rarity-Box">
-			<div>
-				<label for="EX">EX </label> <input type="checkbox" name=" ex" value="EX">
-				<label for="All">ALL RARITIES</label> <input type="checkbox" name="All" value="All">
-			</div>
-			<div>
-				<input type="radio" checked></span>
-        <input type="radio" checked></span>
-        <input type="radio" checked></span>
-        <input type="radio" checked></span>
-				<input type="radio" value="★★★★★" name="007" checked="checked"><span class="transparent"></span>
-			</div>
-		</div>
-		<div class="Filter-Box">
-			<input type="text" name="libfilter" placeholder="search by name, skill text, or artist...">
+
+    <div class="Filter-Box">
+			<input on-change="textChange" type="text" placeholder="search by name, skill text, or artist...">
 		</div>
 	</div>
 </div>
@@ -242,15 +238,22 @@ height: 100px;
               expansion: "All",
               subtype1: "All",
               subtype2: "All",
+              rarity: "All",
+              unittype: "All",
+              text: "",
               stats: [
-                {key: "LV", min: 0, max: 9},
-                {key: "HP", min: 0, max: 9999},
-                {key: "AT", min: 0, max: 9999},
-                {key: "DF", min: 0, max: 9999},
-                {key: "AGI", min: 0, max: 9999},
-                {key: "RNG", min: 0, max: 9999},
-                {key: "LP", min: 0, max: 3}
+                {key: "LV", min: 0, max: 9, name: "Level"},
+                {key: "HP", min: 0, max: 9999, name: "Hit Points"},
+                {key: "AT", min: 0, max: 9999, name: "Attack"},
+                {key: "DF", min: 0, max: 9999, name: "Defense"},
+                {key: "AGI", min: 0, max: 9999, name: "Agility"},
+                {key: "RNG", min: 0, max: 9999, name: "Range"},
+                {key: "LP", min: 0, max: 3, name: "Life Points"}
               ]
+            },
+            textChange: function(e) {
+              this.cur.text = e.srcElement.value;
+              this.set('current', JSON.stringify(this.cur));
             },
             expansionChange: function(e) {
               this.cur.expansion = e.srcElement.value;
@@ -262,6 +265,14 @@ height: 100px;
             },
             subtype2Change: function(e) {
               this.cur.subtype2 = e.srcElement.value;
+              this.set('current', JSON.stringify(this.cur));
+            },
+            rarityChange: function(e) {
+              this.cur.rarity = e.srcElement.value;
+              this.set('current', JSON.stringify(this.cur));
+            },
+            unittypeChange: function(e) {
+              this.cur.unittype = e.srcElement.value;
               this.set('current', JSON.stringify(this.cur));
             },
             statMinChange: function(e) {
@@ -285,6 +296,7 @@ height: 100px;
               this.subtype1 = Array.from(CardModel.subType1s);
               this.subtype2 = Array.from(CardModel.subType2s);
               this.rarity = CardModel.raritys;
+              this.unittype = CardModel.unitTypes;
               this.filters = this.cur.stats;
             }
         });

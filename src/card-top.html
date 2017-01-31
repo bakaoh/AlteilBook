@@ -97,7 +97,7 @@ font-size: 9px;
                 }
             },
             observerStar: function(newValue) {
-                var cardName = Polymer.dom(this.root).querySelector(".cardName");
+                var cardName = Polymer.dom(this.root).querySelector(".flavorContainer");
                 if (newValue < 0) {
                     var exElement = document.createElement('span');
                     exElement.innerHTML = "EX";

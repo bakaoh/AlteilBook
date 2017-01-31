@@ -18,16 +18,24 @@
             @apply(--layout-horizontal);
             @apply(--layout-center-justified);
         }
-        card-info {
-          background: #afb3bb;
-background: linear-gradient(to bottom right, #afb3bb, #676869);
-  height:100%;
-        }
         card-list {
           text-align: center;
           height: 100%;
           overflow-y: scroll;
+          background: linear-gradient(to bottom, black, black 30%, #5a5a5a);
         }
+        paper-drawer-panel {
+  --paper-drawer-panel-left-drawer-container: {
+    background: black;
+    background: linear-gradient(to bottom, black, black 30%, #5a5a5a);
+  };
+}
+paper-drawer-panel {
+  --paper-drawer-panel-main-container: {
+    background: #969696;
+background: linear-gradient(to bottom right, #969696, #2f2f2f);
+  };
+}
     </style>
 
 <card-model></card-model>
@@ -73,7 +81,18 @@ background: linear-gradient(to bottom right, #afb3bb, #676869);
                 isShowInfo: Boolean,
                 isShowList: Boolean
             },
+            ready: function() {
+              var cardId = window.location.hash;
+              this.set('cardId', (cardId != "") ? cardId.substring(1) : -1);
+                window.onhashchange = function() {
+                  var cardId = window.location.hash;
+                  this.set('cardId', (cardId != "") ? cardId.substring(1) : -1);
+                }.bind(this);
+            },
             checkDomIf: function() {
+                if (this.cardId >= 0) {
+                   window.location.hash = "#" + this.cardId;
+                }
                 this.set('isShowInfo', this.cardId >= 0);
                 this.set('isShowList', this.isAtLeast720px || this.cardId < 0);
             }

@@ -39,7 +39,8 @@
                 }
             },
             closeCard: function() {
-              this.set('cardId', -1);
+                this.set('cardId', -1);
+                window.location.hash = " ";
             },
             observerCardId: function() {
                 var cardInfo = Polymer.dom(this.root).querySelector(".cardInfo");

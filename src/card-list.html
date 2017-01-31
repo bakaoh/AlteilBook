@@ -70,11 +70,18 @@ cursor: pointer;
               if (this.curFilter.expansion != "All" && this.curFilter.expansion != card.expansion) return false;
               if (this.curFilter.subtype1 != "All" && this.curFilter.subtype1 != card.subType1) return false;
               if (this.curFilter.subtype2 != "All" && this.curFilter.subtype2 != card.subType2) return false;
+              if (this.curFilter.rarity != "All" && this.correctRarity(this.curFilter.rarity) != card.star) return false;
+              if (this.curFilter.unittype != "All" && this.curFilter.unittype != card.unitType) return false;
+              if (this.curFilter.text != "" && card.name.toLowerCase().indexOf(this.curFilter.text.toLowerCase()) < 0) return false;
               for (var i in this.curFilter.stats) {
                 var key = this.curFilter.stats[i].key;
                 if (card.stats[key] < this.curFilter.stats[i].min || card.stats[key] > this.curFilter.stats[i].max) return false;
               }
               return true;
+            },
+            correctRarity: function(rarity) {
+              if (rarity == "Ex") return -1;
+              return rarity.length;
             },
             listeners: {
                 'tap': 'onSelectCard',
