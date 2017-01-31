@@ -19,8 +19,6 @@ cursor: pointer;
     </template>
 
     <script>
-
-
         Polymer({
             is: "card-list",
 
@@ -31,12 +29,9 @@ cursor: pointer;
                     notify: true
                 },
                 filter: {
-                  type: String,
-                  observer: 'observerFilter'
+                    type: Object,
+                    observer: 'observerFilter'
                 }
-            },
-            attached: function(response) {
-                this.initList();
             },
             initList: function() {
                 var cards = CardModel.cards;
@@ -48,47 +43,45 @@ cursor: pointer;
                 var isFirst = true;
                 var count = 0;
                 for (i in cards) {
-                  if (this.isOK(cards[i])) {
-                    if (count++ > 200) break;
-                    var cardId = cards[i].cid;
-                    var t = document.createElement("div");
-                    t.classList.add("cardThumb");
-                    var style = "background-image: url(http://tinyink.com.vn/ab/images/" + this.pad(cardId) + ".jpg)";
-                    if (isFirst) {
-                      style = "margin-top:10px;" + style;
-                      isFirst = false;
-                    }
-                    t.setAttribute("style", style);
-                    t.setAttribute("card-id", cardId);
+                    if (this.isOK(cards[i])) {
+                        if (count++ > 200) break;
+                        var cardId = cards[i].cid;
+                        var t = document.createElement("div");
+                        t.classList.add("cardThumb");
+                        var style = "background-image: url(http://tinyink.com.vn/ab/images/" + this.pad(cardId) + ".jpg)";
+                        if (isFirst) {
+                            style = "margin-top:10px;" + style;
+                            isFirst = false;
+                        }
+                        t.setAttribute("style", style);
+                        t.setAttribute("card-id", cardId);
 
-                    cardList.appendChild(t);
-                  }
+                        cardList.appendChild(t);
+                    }
                 }
             },
             isOK: function(card) {
-              if (this.filter == "") return true;
-              if (this.curFilter.expansion != "All" && this.curFilter.expansion != card.expansion) return false;
-              if (this.curFilter.subtype1 != "All" && this.curFilter.subtype1 != card.subType1) return false;
-              if (this.curFilter.subtype2 != "All" && this.curFilter.subtype2 != card.subType2) return false;
-              if (this.curFilter.rarity != "All" && this.correctRarity(this.curFilter.rarity) != card.star) return false;
-              if (this.curFilter.unittype != "All" && this.curFilter.unittype != card.unitType) return false;
-              if (this.curFilter.text != "" && card.name.toLowerCase().indexOf(this.curFilter.text.toLowerCase()) < 0) return false;
-              for (var i in this.curFilter.stats) {
-                var key = this.curFilter.stats[i].key;
-                if (card.stats[key] < this.curFilter.stats[i].min || card.stats[key] > this.curFilter.stats[i].max) return false;
-              }
-              return true;
+                if (this.filter.spheres[card.sphere] == false) return false;
+                if (this.filter.expansion != "All" && this.filter.expansion != card.expansion) return false;
+                if (this.filter.subtype1 != "All" && this.filter.subtype1 != card.subType1) return false;
+                if (this.filter.subtype2 != "All" && this.filter.subtype2 != card.subType2) return false;
+                if (this.filter.rarity != "All" && this.correctRarity(this.filter.rarity) != card.star) return false;
+                if (this.filter.unittype != "All" && this.filter.unittype != card.unitType) return false;
+                if (this.filter.text != "" && JSON.stringify(card).toLowerCase().indexOf(this.filter.text.toLowerCase()) < 0) return false;
+                for (var key in this.filter.stats) {
+                    if (card.stats[key] < this.filter.stats[key][0] || card.stats[key] > this.filter.stats[key][1]) return false;
+                }
+                return true;
             },
             correctRarity: function(rarity) {
-              if (rarity == "Ex") return -1;
-              return rarity.length;
+                if (rarity == "Ex") return -1;
+                return rarity.length;
             },
             listeners: {
                 'tap': 'onSelectCard',
             },
             observerFilter: function(newValue) {
-              this.curFilter = newValue != "" ? JSON.parse(newValue) : {};
-              this.initList();
+                if (JSON.stringify(newValue) != JSON.stringify({})) this.initList();
             },
             onSelectCard: function(e) {
                 this.set("cardId", e.srcElement.getAttribute("card-id"));

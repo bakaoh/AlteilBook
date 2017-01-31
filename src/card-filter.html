@@ -15,6 +15,15 @@ font-family: Eurostile-ExtendedTwo;
 background-size: contain;
 }
 
+input[type="number"] { width: 41%; height: 14px; }
+option, select { color: black; font-family: helvetica; font-size: 10pt; width: 95%; }
+.logo {
+  background-image:url(css/images/alteil-logo.png);
+  background-size: contain;
+width: 270px;
+height: 100px;
+}
+
 div.search-row {
   text-align: right;
   color: whitesmoke;
@@ -32,68 +41,18 @@ div.Value-Box {
     text-align:left;
 }
 
-
-input.Sphere-Search, .Unit-Type { display:none; }
-
 /*card sphere*/
+input.Sphere-Search { display:none; }
 div.Sphere { text-align: justify; margin: 20px 15px 10px 15px; vertical-align: middle; height: 36px; }
 label.Sphere-Button { width:36px; height:36px; background-position:36px 0px; display:inline-block; }
-.clear{ background-image:url(css/images/searchbox/clear-gem.png); }
-.multi{ background-image:url(css/images/searchbox/multi-gem.png); }
-.ref{ background-image:url(css/images/searchbox/ref-gem.png); }
-.law{ background-image:url(css/images/searchbox/law-gem.png); }
-.fal{ background-image:url(css/images/searchbox/fal-gem.png); }
-.gow{ background-image:url(css/images/searchbox/gow-gem.png); }
+.PhidienceGem{ background-image:url(css/images/searchbox/clear-gem.png); }
+.MultiGem{ background-image:url(css/images/searchbox/multi-gem.png); }
+.RefessGem{ background-image:url(css/images/searchbox/ref-gem.png); }
+.LawtiaGem{ background-image:url(css/images/searchbox/law-gem.png); }
+.FalkowGem{ background-image:url(css/images/searchbox/fal-gem.png); }
+.GowenGem{ background-image:url(css/images/searchbox/gow-gem.png); }
 input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
 
-/*card unit*/
-label.Unit-Card { width:36px; height:45px; background-position:36px 0px; display:inline-block; }
-.unit{ background-image:url(css/images/searchbox/unit-card.png); }
-.char{ background-image:url(css/images/searchbox/char-card.png); }
-.grim{ background-image:url(css/images/searchbox/grim-card.png); }
-input.Unit-Type:checked+label.Unit-Card { background-position:0px 0px; }
-
-/*.transparent{
-    opacity:0.5;
-}*/
-
-input[type="number"]{
-  width: 41%;
-  height: 14px;
-}
-
-option, select {
-    color: black;
-    font-family: helvetica;
-    font-size: 10pt;
-    width: 95%;
-}
-
-
-.logo {
-  background-image:url(css/images/alteil-logo.png);
-  background-size: contain;
-width: 270px;
-height: 100px;
-}
-
-
-.Rarity-Box, .Type-Box {
-    display: inline-block;
-    width: 46%;
-    margin: 5px;
-    padding-left: 9px;
-    text-align: center;
-}
-
-.Rarity-Box label{
-    font-size:8px;
-    color:#fff;
-}
-.Rarity-Box {
-    margin-left: -15px;
-    margin-top: -15px;
-}
 
 .Filter-Box input {
     width: 84%;
@@ -101,55 +60,19 @@ height: 100px;
     height:27px;
     text-align: center;
 }
-
-.Rarity-Box input[type="radio"] {
-    position:absolute;
-    filter:alpha(opacity=0);
-    -moz-opacity:0;
-    -khtml-opacity:0;
-    opacity:0;
-    cursor:pointer;
-    width:25px;
-    height:24px;
-}
-
-.Rarity-Box span,star {
-    width:25px;
-    height:24px;
-    margin-left:-5px;
-    display:inline-block;
-    background:url(css/images/searchbox/rarity.png) no-repeat -25px 0;
-}
-
-.Rarity-Box input[type="radio"]:checked + span {
-    background-position:-25px 0;
-}
-
-.Rarity-Box input[type="radio"]:checked + span ~ span{
-    background-position:0 0;
-}
-
-
-
     </style>
 
     <div class="Search-Filter">
 	<div class="logo"></div>
+
 	<div class="Sphere">
-		<input id="Refess" type="checkbox" class="Sphere-Search" checked>
-		<label for="Refess" class="Sphere-Button ref"></label>
-		<input id="Lawtia" type="checkbox" class="Sphere-Search" checked>
-		<label for="Lawtia" class="Sphere-Button law"></label>
-		<input id="Gowen" type="checkbox" class="Sphere-Search" checked>
-		<label for="Gowen" class="Sphere-Button gow"></label>
-		<input id="Falkow" type="checkbox" class="Sphere-Search" checked>
-		<label for="Falkow" class="Sphere-Button fal"></label>
-		<input id="Multi" type="checkbox" class="Sphere-Search" checked>
-		<label for="Multi" class="Sphere-Button multi"></label>
-		<input id="Phidience" type="checkbox" class="Sphere-Search" checked>
-		<label for="Phidience" class="Sphere-Button clear"></label>
+    <template is="dom-repeat" items="{{spheres}}">
+		<input on-change="sphereChange" id$="{{item.name}}" type="checkbox" class="Sphere-Search" checked="{{item.value}}">
+		<label for$="{{item.name}}" class$="Sphere-Button {{item.name}}Gem"></label>
+  </template>
 		<span class="stretch"></span>
 	</div>
+
 	<div class="Search-Values">
 		<div id="scroll">
 
@@ -160,66 +83,66 @@ height: 100px;
             <template is="dom-repeat" items="{{expansions}}">
               <option value="{{item}}">{{item}}</option>
               </template>
-          </select>
-        </div>
-			</div>
-			<div class="search-row">
-				Subtype 1:
-				<div class="Value-Box">
-          <select on-change="subtype1Change">
+    </select>
+    </div>
+    </div>
+    <div class="search-row">
+        Subtype 1:
+        <div class="Value-Box">
+            <select on-change="subtype1Change">
             <template is="dom-repeat" items="{{subtype1}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
         </div>
-			</div>
-			<div class="search-row">
-				Subtype 2:
+    </div>
+    <div class="search-row">
+        Subtype 2:
         <div class="Value-Box">
-          <select on-change="subtype2Change">
+            <select on-change="subtype2Change">
             <template is="dom-repeat" items="{{subtype2}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
         </div>
-			</div>
-      <div class="search-row">
-				Rarity:
-				<div class="Value-Box">
-          <select on-change="rarityChange">
+    </div>
+    <div class="search-row">
+        Rarity:
+        <div class="Value-Box">
+            <select on-change="rarityChange">
             <template is="dom-repeat" items="{{rarity}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
         </div>
-			</div>
-      <div class="search-row">
-				Unit Type:
-				<div class="Value-Box">
-          <select on-change="unittypeChange">
+    </div>
+    <div class="search-row">
+        Unit Type:
+        <div class="Value-Box">
+            <select on-change="unittypeChange">
             <template is="dom-repeat" items="{{unittype}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
         </div>
-			</div>
-      <template is="dom-repeat" items="{{filters}}">
+    </div>
+    <template is="dom-repeat" items="{{stats}}">
 			<div class="search-row">
 				{{item.name}}:
 				<div class="Value-Box">
-					<input name$="{{item.key}}" on-change="statMinChange" value="{{item.min}}" type="number">~
-          <input name$="{{item.key}}" on-change="statMaxChange" value="{{item.max}}" type="number">
+					<input name$="{{item.name}}" on-change="statMinChange" value="{{item.min}}" type="number">~
+          <input name$="{{item.name}}" on-change="statMaxChange" value="{{item.max}}" type="number">
 				</div>
 			</div>
     </template>
 
-		</div>
+    </div>
 
     <div class="Filter-Box">
-			<input on-change="textChange" type="text" placeholder="search by name, skill text, or artist...">
-		</div>
-	</div>
-</div>
+        <input on-change="textChange" type="text" placeholder="search by name, skill text, or artist...">
+    </div>
+    </div>
+    </div>
     </template>
 
     <script>
@@ -228,77 +151,105 @@ height: 100px;
 
             properties: {
                 current: {
-                  type: String,
-                  reflectToAttribute: true,
-                  notify: true,
-                  value: ""
+                    type: Object,
+                    reflectToAttribute: true,
+                    notify: true,
+                    value: {
+                        expansion: "All",
+                        subtype1: "All",
+                        subtype2: "All",
+                        rarity: "All",
+                        unittype: "All",
+                        text: "",
+                        spheres: {
+                          "Refess": true,
+                          "Lawtia": true,
+                          "Gowen": true,
+                          "Falkow": true,
+                          "Multi": true,
+                          "Phidience": true
+                        },
+                        stats:{
+                          "LV": [0,9],
+                          "HP": [0,9999],
+                          "AT": [0,9999],
+                          "DF": [0,9999],
+                          "AGI": [0,9999],
+                          "RNG": [0,9999],
+                          "LP": [0,3]
+                        }
+                    }
                 }
             },
-            cur: {
-              expansion: "All",
-              subtype1: "All",
-              subtype2: "All",
-              rarity: "All",
-              unittype: "All",
-              text: "",
-              stats: [
-                {key: "LV", min: 0, max: 9, name: "Level"},
-                {key: "HP", min: 0, max: 9999, name: "Hit Points"},
-                {key: "AT", min: 0, max: 9999, name: "Attack"},
-                {key: "DF", min: 0, max: 9999, name: "Defense"},
-                {key: "AGI", min: 0, max: 9999, name: "Agility"},
-                {key: "RNG", min: 0, max: 9999, name: "Range"},
-                {key: "LP", min: 0, max: 3, name: "Life Points"}
-              ]
+            updateFilter: function() {
+                var cur = this.current;
+                this.set('current', {});
+                this.set('current', cur);
+            },
+            sphereChange: function(e) {
+                this.current.spheres[e.srcElement.id] = e.srcElement.checked;
+                this.updateFilter();
             },
             textChange: function(e) {
-              this.cur.text = e.srcElement.value;
-              this.set('current', JSON.stringify(this.cur));
+                this.set('current.text', e.srcElement.value);
+                this.updateFilter();
             },
             expansionChange: function(e) {
-              this.cur.expansion = e.srcElement.value;
-              this.set('current', JSON.stringify(this.cur));
+                this.set('current.expansion', e.srcElement.value);
+                this.updateFilter();
             },
             subtype1Change: function(e) {
-              this.cur.subtype1 = e.srcElement.value;
-              this.set('current', JSON.stringify(this.cur));
+                this.set('current.subtype1', e.srcElement.value);
+                this.updateFilter();
             },
             subtype2Change: function(e) {
-              this.cur.subtype2 = e.srcElement.value;
-              this.set('current', JSON.stringify(this.cur));
+                this.set('current.subtype2', e.srcElement.value);
+                this.updateFilter();
             },
             rarityChange: function(e) {
-              this.cur.rarity = e.srcElement.value;
-              this.set('current', JSON.stringify(this.cur));
+                this.set('current.rarity', e.srcElement.value);
+                this.updateFilter();
             },
             unittypeChange: function(e) {
-              this.cur.unittype = e.srcElement.value;
-              this.set('current', JSON.stringify(this.cur));
+                this.set('current.unittype', e.srcElement.value);
+                this.updateFilter();
             },
             statMinChange: function(e) {
-              e.srcElement.value = Number(e.srcElement.value);
-              for (var i in this.cur.stats) {
-                if (this.cur.stats[i].key == e.srcElement.name)
-                    this.cur.stats[i].min = e.srcElement.value;
-              }
-              this.set('current', JSON.stringify(this.cur));
+                e.srcElement.value = Number(e.srcElement.value);
+                this.current.stats[e.srcElement.name][0] = e.srcElement.value;
+                this.updateFilter();
             },
             statMaxChange: function(e) {
-              e.srcElement.value = Number(e.srcElement.value);
-              for (var i in this.cur.stats) {
-                if (this.cur.stats[i].key == e.srcElement.name)
-                  this.cur.stats[i].max = e.srcElement.value;
-              }
-              this.set('current', JSON.stringify(this.cur));
+                e.srcElement.value = Number(e.srcElement.value);
+                this.current.stats[e.srcElement.name][1] = e.srcElement.value;
+                this.updateFilter();
             },
             attached: function() {
-              this.expansions = Array.from(CardModel.expansions);
-              this.subtype1 = Array.from(CardModel.subType1s);
-              this.subtype2 = Array.from(CardModel.subType2s);
-              this.rarity = CardModel.raritys;
-              this.unittype = CardModel.unitTypes;
-              this.filters = this.cur.stats;
-            }
+                this.expansions = Array.from(CardModel.expansions);
+                this.subtype1 = Array.from(CardModel.subType1s);
+                this.subtype2 = Array.from(CardModel.subType2s);
+                this.rarity = ["All", "Ex", "★", "★★", "★★★", "★★★★", "★★★★★"];
+                this.unittype = ["All", "Character", "Unit", "Grimoire"];
+                this.spheres = this._toSphereArray(this.current.spheres);
+                this.stats= this._toStatArray(this.current.stats);
+            },
+            _toSphereArray: function(obj) {
+            return Object.keys(obj).map(function(key) {
+                return {
+                    name: key,
+                    value: obj[key]
+                };
+            });
+        },
+        _toStatArray: function(obj) {
+        return Object.keys(obj).map(function(key) {
+            return {
+                name: key,
+                min: obj[key][0],
+                max: obj[key][1],
+            };
+        });
+    }
         });
     </script>
 </dom-module>
