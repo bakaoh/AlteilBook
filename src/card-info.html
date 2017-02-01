@@ -11,6 +11,7 @@
     <style>
         .cardInfo {
             margin: 20px 10px 0px 15px;
+            min-width: 333px;
         }
         .closeButton {
           background-image: url(css/images/close.png);
@@ -39,8 +40,8 @@
                 }
             },
             closeCard: function() {
-                this.set('cardId', -1);
-                window.location.hash = " ";
+                // this.set('cardId', -1);
+                window.history.back();
             },
             observerCardId: function() {
                 var cardInfo = Polymer.dom(this.root).querySelector(".cardInfo");
@@ -57,7 +58,11 @@
                     name: card.name,
                     star: card.star,
                     unitType: card.unitType,
-                    text: card.texts
+                    text: card.texts,
+                    subType1: card.subType1,
+                    subType2: card.subType2,
+                    expansion: card.expansion,
+                    illustrator: card.illustrator
                 };
 
                 var cardTop = document.createElement('card-top');

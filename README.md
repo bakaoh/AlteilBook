@@ -6,13 +6,17 @@ A card browser for [Alteil CCG](http://info.alteil.apocoplay.com/). This is my s
 
 ### Setup
 
-##### Install Polymer
+#### Prerequisites
+
+Install [polymer-cli](https://github.com/Polymer/polymer-cli):
 
     npm install -g polymer-cli
 
-#### Build
+#### Setup
 
-    cd "<path to alteil-book checkout>"
+    git clone https://github.com/bakaoh/AlteilBook.git AlteilBook
+    cd AlteilBook
+    bower install
     polymer build
 
 #### Preview

@@ -18,43 +18,51 @@
             @apply(--layout-horizontal);
             @apply(--layout-center-justified);
         }
+
         card-list {
-          text-align: center;
-          height: 100%;
-          overflow-y: scroll;
-          background: linear-gradient(to bottom, black, black 30%, #4c5870);
+            text-align: center;
+            height: 100%;
+            overflow-y: scroll;
+            background: linear-gradient(to bottom, black, black 30%, #4c5870);
         }
+
         paper-drawer-panel {
-  --paper-drawer-panel-left-drawer-container: {
-    background: black;
-    background: linear-gradient(to bottom, black, black 30%, #4c5870); /*5a5a5a*/
-  };
-}
-paper-drawer-panel {
-  --paper-drawer-panel-main-container: {
-    background: #969696;
-background: linear-gradient(to bottom right, #4c5870, #5f5f5f);
-  };
-}
+            --paper-drawer-panel-left-drawer-container: {
+                background: black;
+                background: linear-gradient(to bottom, black, black 30%, #4c5870);
+            };
+        }
+
+        paper-drawer-panel {
+            --paper-drawer-panel-main-container: {
+                background: #969696;
+                background: linear-gradient(to bottom right, #4c5870, #5f5f5f);
+            };
+        }
     </style>
 
-<card-model></card-model>
+    <card-model></card-model>
     <paper-drawer-panel left-drawer drawer-width="270px">
+
         <paper-header-panel drawer>
             <card-filter current="{{filter}}"></card-filter>
         </paper-header-panel>
+
         <paper-header-panel main>
             <div class="container" style="height: 100%">
+
                 <template is="dom-if" if="{{isShowInfo}}">
                 <card-info card-id="{{cardId}}"></card-info>
                 </template>
-    <template is="dom-if" if="{{isShowList}}">
+
+                <template is="dom-if" if="{{isShowList}}">
                 <card-list card-id="{{cardId}}" filter="{{filter}}" class="flex-auto"></card-list>
                 </template>
-    </div>
-    </paper-header-panel>
+
+            </div>
+        </paper-header-panel>
     </paper-drawer-panel>
-    <iron-media-query query="(min-width: 720px)" query-matches="{{isAtLeast720px}}"></iron-media-query>
+    <iron-media-query query="(min-width: 720px)" query-matches="{{isSmallScreen}}"></iron-media-query>
 
     </template>
 
@@ -74,7 +82,7 @@ background: linear-gradient(to bottom right, #4c5870, #5f5f5f);
                     type: Object,
                     notify: true
                 },
-                isAtLeast720px: {
+                isSmallScreen: {
                     type: Boolean,
                     observer: 'checkDomIf'
                 },
@@ -82,19 +90,19 @@ background: linear-gradient(to bottom right, #4c5870, #5f5f5f);
                 isShowList: Boolean
             },
             ready: function() {
-              var cardId = window.location.hash;
-              this.set('cardId', (cardId != "") ? cardId.substring(1) : -1);
+                var cardId = window.location.hash;
+                this.set('cardId', (cardId != "") ? cardId.substring(1) : -1);
                 window.onhashchange = function() {
-                  var cardId = window.location.hash;
-                  this.set('cardId', (cardId != "") ? cardId.substring(1) : -1);
+                    var cardId = window.location.hash;
+                    this.set('cardId', (cardId != "") ? cardId.substring(1) : -1);
                 }.bind(this);
             },
             checkDomIf: function() {
                 if (this.cardId >= 0) {
-                   window.location.hash = "#" + this.cardId;
+                    window.location.hash = "#" + this.cardId;
                 }
                 this.set('isShowInfo', this.cardId >= 0);
-                this.set('isShowList', this.isAtLeast720px || this.cardId < 0);
+                this.set('isShowList', this.isSmallScreen || this.cardId < 0);
             }
         });
     </script>
