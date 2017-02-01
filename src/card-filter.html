@@ -70,63 +70,63 @@ input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
 		<input on-change="sphereChange" id$="{{item.name}}" type="checkbox" class="Sphere-Search" checked="{{item.value}}">
 		<label for$="{{item.name}}" class$="Sphere-Button {{item.name}}Gem"></label>
   </template>
-		<span class="stretch"></span>
-	</div>
+    <span class="stretch"></span>
+    </div>
 
-	<div class="Search-Values">
-		<div id="scroll">
+    <div class="Search-Values">
+        <div id="scroll">
 
-			<div class="search-row">
-				EXPANSION:
-				<div class="Value-Box">
-          <select on-change="expansionChange">
+            <div class="search-row">
+                EXPANSION:
+                <div class="Value-Box">
+                    <select on-change="expansionChange">
             <template is="dom-repeat" items="{{expansions}}">
               <option value="{{item}}">{{item}}</option>
               </template>
     </select>
-    </div>
-    </div>
-    <div class="search-row">
-        Subtype 1:
-        <div class="Value-Box">
-            <select on-change="subtype1Change">
+                </div>
+            </div>
+            <div class="search-row">
+                Subtype 1:
+                <div class="Value-Box">
+                    <select on-change="subtype1Change">
             <template is="dom-repeat" items="{{subtype1}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
-        </div>
-    </div>
-    <div class="search-row">
-        Subtype 2:
-        <div class="Value-Box">
-            <select on-change="subtype2Change">
+                </div>
+            </div>
+            <div class="search-row">
+                Subtype 2:
+                <div class="Value-Box">
+                    <select on-change="subtype2Change">
             <template is="dom-repeat" items="{{subtype2}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
-        </div>
-    </div>
-    <div class="search-row">
-        Rarity:
-        <div class="Value-Box">
-            <select on-change="rarityChange">
+                </div>
+            </div>
+            <div class="search-row">
+                Rarity:
+                <div class="Value-Box">
+                    <select on-change="rarityChange">
             <template is="dom-repeat" items="{{rarity}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
-        </div>
-    </div>
-    <div class="search-row">
-        Unit Type:
-        <div class="Value-Box">
-            <select on-change="unittypeChange">
+                </div>
+            </div>
+            <div class="search-row">
+                Unit Type:
+                <div class="Value-Box">
+                    <select on-change="unittypeChange">
             <template is="dom-repeat" items="{{unittype}}">
               <option value="{{item}}">{{item}}</option>
               </template>
           </select>
-        </div>
-    </div>
-    <template is="dom-repeat" items="{{stats}}">
+                </div>
+            </div>
+            <template is="dom-repeat" items="{{stats}}">
 			<div class="search-row">
 				{{item.name}}:
 				<div class="Value-Box">
@@ -136,11 +136,11 @@ input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
 			</div>
     </template>
 
-    </div>
+        </div>
 
-    <div class="Filter-Box">
-        <input on-change="textChange" type="text" placeholder="search by name, skill text, or artist...">
-    </div>
+        <div class="Filter-Box">
+            <input on-change="textChange" type="text" placeholder="search by name, skill text, or artist...">
+        </div>
     </div>
     </div>
     </template>
@@ -162,21 +162,21 @@ input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
                         unittype: "All",
                         text: "",
                         spheres: {
-                          "Refess": true,
-                          "Lawtia": true,
-                          "Gowen": true,
-                          "Falkow": true,
-                          "Multi": true,
-                          "Phidience": true
+                            "Refess": true,
+                            "Lawtia": true,
+                            "Gowen": true,
+                            "Falkow": true,
+                            "Multi": true,
+                            "Phidience": true
                         },
-                        stats:{
-                          "LV": [0,9],
-                          "HP": [0,9999],
-                          "AT": [0,9999],
-                          "DF": [0,9999],
-                          "AGI": [0,9999],
-                          "RNG": [0,9999],
-                          "LP": [0,3]
+                        stats: {
+                            "LV": [0, 9],
+                            "HP": [0, 150],
+                            "AT": [0, 110],
+                            "DF": [0, 40],
+                            "AGI": [0, 5],
+                            "RNG": [0, 5],
+                            "LP": [0, 3]
                         }
                     }
                 }
@@ -231,25 +231,25 @@ input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
                 this.rarity = ["All", "Ex", "★", "★★", "★★★", "★★★★", "★★★★★"];
                 this.unittype = ["All", "Character", "Unit", "Grimoire"];
                 this.spheres = this._toSphereArray(this.current.spheres);
-                this.stats= this._toStatArray(this.current.stats);
+                this.stats = this._toStatArray(this.current.stats);
             },
             _toSphereArray: function(obj) {
-            return Object.keys(obj).map(function(key) {
-                return {
-                    name: key,
-                    value: obj[key]
-                };
-            });
-        },
-        _toStatArray: function(obj) {
-        return Object.keys(obj).map(function(key) {
-            return {
-                name: key,
-                min: obj[key][0],
-                max: obj[key][1],
-            };
-        });
-    }
+                return Object.keys(obj).map(function(key) {
+                    return {
+                        name: key,
+                        value: obj[key]
+                    };
+                });
+            },
+            _toStatArray: function(obj) {
+                return Object.keys(obj).map(function(key) {
+                    return {
+                        name: key,
+                        min: obj[key][0],
+                        max: obj[key][1],
+                    };
+                });
+            }
         });
     </script>
 </dom-module>

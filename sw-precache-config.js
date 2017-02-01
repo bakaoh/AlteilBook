@@ -20,7 +20,7 @@ module.exports = {
     ],
     navigateFallback: 'index.html',
     // runtimeCaching: [{
-    //     urlPattern: /^http:\/\/tinyink\.com\.vn\/ab/,
+    //     urlPattern: /^https:\/\/tinyink\.com\.vn\/ab/,
     //     handler: 'fastest'
     // }]
 };
