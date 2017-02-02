@@ -2,7 +2,6 @@
 <!-- <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html"> -->
 
 <dom-module id="card-model">
-  <template>
   <style>
   ::-webkit-scrollbar
   {
@@ -29,12 +28,13 @@
     background: #C2C2C2;
   }
   </style>
-  <!-- <iron-ajax
+  <!-- <template>
+  <iron-ajax
     auto
     url="info.txt"
     handle-as="json"
-    on-response="reformat"></iron-ajax> -->
-</template>
+    on-response="reformat"></iron-ajax>
+  </template> -->
     <script type="text/javascript" src="data.json"></script>
     <script>
         var CardModel = {
@@ -45,6 +45,7 @@
             subType2s: new Set(),
             init: function() {
               this.expansions.add("All");
+              this.expansions.add("EX Cards");
               this.subType1s.add("All");
               this.subType2s.add("All");
               for (i in this.cards) {
@@ -53,6 +54,8 @@
                 this.subType1s.add(card.subType1);
                 this.subType2s.add(card.subType2);
               }
+              this.subType1s.delete(null);
+              this.subType2s.delete(null);
             }
         };
         Polymer({
@@ -67,10 +70,8 @@
                 // console.log("Load cards success!");
                 // console.log(cards);
                 for (i in cards) {
-                    // if (i > 10) break;
                     var card = cards[i];
                     if (card.CardId != card.RealID) continue;
-                    // console.log(card);
                     mycards[card.CardId] = {
                         cid: card.RealID,
                         sphere: card.Sphere,
@@ -110,7 +111,6 @@
                     mycards[card.CardId].skills = myskill;
                 }
                 console.log("var cardJson ='" + JSON.stringify(mycards) + "';");
-                // Polymer.dom(this.root).innerHTML = "aaa";
             }
         });
     </script>
