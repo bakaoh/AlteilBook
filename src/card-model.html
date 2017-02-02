@@ -1,5 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<!-- <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html"> -->
+
 <dom-module id="card-model">
+  <template>
   <style>
   ::-webkit-scrollbar
   {
@@ -26,6 +29,12 @@
     background: #C2C2C2;
   }
   </style>
+  <!-- <iron-ajax
+    auto
+    url="info.txt"
+    handle-as="json"
+    on-response="reformat"></iron-ajax> -->
+</template>
     <script type="text/javascript" src="data.json"></script>
     <script>
         var CardModel = {
@@ -55,7 +64,8 @@
 
                 var mycards = {};
                 var cards = response.detail.response.Cards;
-                console.log("Load cards success!");
+                // console.log("Load cards success!");
+                // console.log(cards);
                 for (i in cards) {
                     // if (i > 10) break;
                     var card = cards[i];
@@ -64,10 +74,11 @@
                     mycards[card.CardId] = {
                         cid: card.RealID,
                         sphere: card.Sphere,
+                        multiSphere: card.MultiSphere,
                         name: card.Name,
                         expansion: card.Expansion,
                         star: card.Rarity == "EX" ? -1 : card.CardSetRarity,
-                        unitType: card.UnitType == "Unnamed" ? "Unit" : card.UnitType,
+                        unitType: card.CardType == "Grimoire" ? "Grimoire" : (card.UnitType == "Unnamed" ? "Unit" : card.UnitType),
                         subType1: card.SubType1,
                         subType2: card.SubType2,
                         texts: [card.FlavorText.Text1, card.FlavorText.Text2],
@@ -85,14 +96,14 @@
 
                     var myskill = [];
                     for (s in card.Skills) {
-                        if ((s != "Soul" && !s.startsWith("Skill")) || card.Skills[s] == null) continue;
+                        if ((s != "Soul" && s!= "RankUp" && !s.startsWith("Skill")) || card.Skills[s] == null) continue;
                         var skill = card.Skills[s];
                         var skillInfo = {
                             comment: skill.Comment,
                             kid: skill.Id,
                             name: skill.Name,
                             sp: skill.SP,
-                            type: skill.Type
+                            type: skill.Type == null ? s : skill.Type
                         }
                         myskill.push(skillInfo);
                     }

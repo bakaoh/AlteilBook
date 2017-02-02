@@ -62,7 +62,11 @@
                 }
             },
             isOK: function(card) {
-                if (this.filter.spheres[card.sphere] == false) return false;
+                if (card.multiSphere == null) {
+                  if (!this.filter.spheres[card.sphere]) return false;
+                } else {
+                  if (!this.filter.spheres["Multi"]) return false;
+                }
                 if (this.filter.expansion != "All" && this.filter.expansion != card.expansion) return false;
                 if (this.filter.subtype1 != "All" && this.filter.subtype1 != card.subType1) return false;
                 if (this.filter.subtype2 != "All" && this.filter.subtype2 != card.subType2) return false;
