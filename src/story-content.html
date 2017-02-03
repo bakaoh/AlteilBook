@@ -29,7 +29,7 @@
         }
     </style>
 
-    <iron-ajax auto url$="src/story/{{storyId}}.md" handle-as="string" on-response="render"></iron-ajax>
+    <iron-ajax auto url$="src/story/{{storyId}}.md" handle-as="text" on-response="render"></iron-ajax>
     <marked-element markdown="{{markdown}}">
         <div class="markdown-html"></div>
     </marked-element>
