@@ -8,7 +8,7 @@
 <link rel="import" href="card-info.html">
 <link rel="import" href="card-list.html">
 <link rel="import" href="alteil-drawer.html">
-<link rel="import" href="lavato-story.html">
+<link rel="import" href="story-content.html">
 
 <dom-module id="alteil-book">
 
@@ -20,7 +20,7 @@
             @apply(--layout-center-justified);
         }
 
-        lavato-story, card-list {
+        story-content, card-list {
             text-align: center;
             height: 100%;
             overflow-y: scroll;
@@ -46,7 +46,7 @@
     <paper-drawer-panel left-drawer drawer-width="270px">
 
         <paper-header-panel drawer>
-            <alteil-drawer tab="{{tab}}" filter="{{filter}}"></alteil-drawer>
+            <alteil-drawer tab="{{tab}}" filter="{{filter}}" story-id="{{storyId}}"></alteil-drawer>
         </paper-header-panel>
 
         <paper-header-panel main>
@@ -58,7 +58,7 @@
 
                 <template is="dom-if" if="{{isShowList}}">
                   <template is="dom-if" if="{{isShowStory}}">
-                    <lavato-story class="flex-auto"></lavato-story>
+                    <story-content story-id="{{storyId}}" class="flex-auto"></story-content>
                   </template>
                   <template is="dom-if" if="{{isShowCards}}">
                     <card-list card-id="{{cardId}}" filter="{{filter}}" class="flex-auto"></card-list>
@@ -81,7 +81,7 @@
                   type: String,
                   notify: true,
                   observer: 'showTab',
-                  value: "Story"
+                  value: "Filter"
                 },
                 cardId: {
                     type: Number,
@@ -89,6 +89,12 @@
                     notify: true,
                     observer: 'checkDomIf',
                     value: -1
+                },
+                storyId: {
+                    type: Number,
+                    reflectToAttribute: true,
+                    notify: true,
+                    value: 1
                 },
                 filter: {
                     type: Object,
