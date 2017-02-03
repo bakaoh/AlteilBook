@@ -1,0 +1,101 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="card-filter.html">
+
+<dom-module id="story-list">
+    <template>
+
+    <style>
+    div.File-List-Label {
+        display: list-item;
+        font-family: Helvetica;
+        font-size: 9.5pt;
+    }
+    ol.File-List {
+      padding-left: 28px;
+      margin-top: 50px;
+    }
+    ol.File-List > div {
+      font-size: 10px;
+      font-weight: bold;
+    position: relative;
+    margin: 6px 0px 0px 10px;
+    padding-left: 20px;
+    list-style: none;
+    background: #ccc9c5;
+    height: 26px;
+    line-height: 26px;
+    box-shadow: rgb(128, 128, 128) 3px 3px 2px inset;
+}
+input[type="radio"].File-Radio+label {
+    display: block;
+    margin-left: -30px;
+    padding-left: 20px;padding-top: 3px;
+}
+input[type="radio"]:checked+label {
+    background-color: white;
+}
+ol.File-List > div:before {
+    content: attr(name);
+    position: absolute;
+    left: -28px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 2px solid #212121;
+    color: #fff;
+    background: #525151;
+    font-weight: bold;
+    font-family: ElectraLH-BoldDisplay;
+    font-size: initial;
+    text-align: center;
+    width: 28px;
+    height: 26px;
+}
+    </style>
+<ol class="File-List">
+  <template is="dom-repeat" items="{{stories}}">
+    <div class="File-List-Label" name$="{{item.id}}">
+      <input class="File-Radio" type="radio" id$="file{{item.id}}" name="cardfile" value$="{{item.id}}" style="display:none">
+      <label for$="file{{item.id}}">{{item.title}}</label>
+            </div>
+          </template>
+
+</ol>
+    </template>
+
+    <script>
+        Polymer({
+            is: "story-list",
+
+            properties: {
+                stories: {
+                    type: Array,
+                    notify: true,
+                    value: [
+                      {id: 1, title: "THE SOLAR KINGDOM OF FOLRART"},
+                      {id: 2, title: "THE SOLAR PRINCE VERLAAT"},
+                      {id: 3, title: "RULER OF CREST ESKATIA"},
+                      {id: 4, title: "LION BARON AND ABYSS CENTAUR"},
+                      {id: 5, title: "GUN PRINCESS YUNI"},
+                      {id: 6, title: "MECERNARY NATION HEIERRAT"},
+                      {id: 7, title: "MAGIC DOLLS"},
+                      {id: 10, title: "THE ANGELS"},
+                      {id: 11, title: "DRAGONS"}
+                    ]
+                }
+            },
+            tabChange: function(e) {
+                console.log("tabchange" + e)
+                this.set('tab', e.srcElement.value);
+                if (this.tab == 'Filter') {
+                    this.set('isFilter', true);
+                    this.set('isStory', false);
+                } else {
+                    this.set('isFilter', false);
+                    this.set('isStory', true);
+                }
+            }
+        });
+    </script>
+</dom-module>

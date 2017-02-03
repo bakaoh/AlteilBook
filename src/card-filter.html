@@ -5,24 +5,8 @@
 
     <style>
 
-    div.Search-Filter {
-    width: 270px;
-height: 100%;
-background-image: url(css/images/hallway-background.jpg);
-background-repeat: no-repeat;
-text-align: justify;
-font-family: Eurostile-ExtendedTwo;
-background-size: contain;
-}
-
 input[type="number"] { width: 41%; height: 14px; }
 option, select { color: black; font-family: helvetica; font-size: 10pt; width: 95%; }
-.logo {
-  background-image:url(css/images/alteil-logo.png);
-  background-size: contain;
-width: 270px;
-height: 100px;
-}
 
 div.search-row {
   text-align: right;
@@ -61,9 +45,6 @@ input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
     text-align: center;
 }
     </style>
-
-    <div class="Search-Filter">
-	<div class="logo"></div>
 
 	<div class="Sphere">
     <template is="dom-repeat" items="{{spheres}}">
@@ -142,7 +123,7 @@ input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
             <input on-change="textChange" type="text" placeholder="search by name, skill text, or artist...">
         </div>
     </div>
-    </div>
+
     </template>
 
     <script>
@@ -150,7 +131,7 @@ input.Sphere-Search:checked+label.Sphere-Button { background-position:0px 0px; }
             is: "card-filter",
 
             properties: {
-                current: {
+              current: {
                     type: Object,
                     reflectToAttribute: true,
                     notify: true,

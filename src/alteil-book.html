@@ -7,7 +7,8 @@
 <link rel="import" href="card-model.html">
 <link rel="import" href="card-info.html">
 <link rel="import" href="card-list.html">
-<link rel="import" href="card-filter.html">
+<link rel="import" href="alteil-drawer.html">
+<link rel="import" href="lavato-story.html">
 
 <dom-module id="alteil-book">
 
@@ -19,7 +20,7 @@
             @apply(--layout-center-justified);
         }
 
-        card-list {
+        lavato-story, card-list {
             text-align: center;
             height: 100%;
             overflow-y: scroll;
@@ -45,7 +46,7 @@
     <paper-drawer-panel left-drawer drawer-width="270px">
 
         <paper-header-panel drawer>
-            <card-filter current="{{filter}}"></card-filter>
+            <alteil-drawer tab="{{tab}}" filter="{{filter}}"></alteil-drawer>
         </paper-header-panel>
 
         <paper-header-panel main>
@@ -56,7 +57,12 @@
                 </template>
 
                 <template is="dom-if" if="{{isShowList}}">
-                <card-list card-id="{{cardId}}" filter="{{filter}}" class="flex-auto"></card-list>
+                  <template is="dom-if" if="{{isShowStory}}">
+                    <lavato-story class="flex-auto"></lavato-story>
+                  </template>
+                  <template is="dom-if" if="{{isShowCards}}">
+                    <card-list card-id="{{cardId}}" filter="{{filter}}" class="flex-auto"></card-list>
+                  </template>
                 </template>
 
             </div>
@@ -71,6 +77,12 @@
             is: "alteil-book",
 
             properties: {
+                tab: {
+                  type: String,
+                  notify: true,
+                  observer: 'showTab',
+                  value: "Story"
+                },
                 cardId: {
                     type: Number,
                     reflectToAttribute: true,
@@ -87,7 +99,9 @@
                     observer: 'checkDomIf'
                 },
                 isShowInfo: Boolean,
-                isShowList: Boolean
+                isShowList: Boolean,
+                isShowStory: Boolean,
+                isShowCards: Boolean
             },
             ready: function() {
                 var cardId = window.location.hash;
@@ -96,6 +110,15 @@
                     var cardId = window.location.hash;
                     this.set('cardId', (cardId != "") ? cardId.substring(1) : -1);
                 }.bind(this);
+            },
+            showTab: function() {
+                if (this.tab == 'Filter') {
+                  this.set('isShowCards', true);
+                  this.set('isShowStory', false);
+                } else {
+                  this.set('isShowCards', false);
+                  this.set('isShowStory', true);
+                }
             },
             checkDomIf: function() {
                 if (this.cardId >= 0) {

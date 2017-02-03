@@ -1,0 +1,126 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="card-filter.html">
+<link rel="import" href="story-list.html">
+
+<dom-module id="alteil-drawer">
+    <template>
+
+    <style>
+
+    div.Search-Filter {
+    width: 270px;
+height: 100%;
+background-image: url(css/images/hallway-background.jpg);
+background-repeat: no-repeat;
+text-align: justify;
+font-family: Eurostile-ExtendedTwo;
+background-size: contain;
+}
+
+.logo {
+  background-image:url(css/images/alteil-logo.png);
+  background-size: contain;
+width: 270px;
+height: 100px;
+}
+
+/* selector*/
+div.Library-Selector {
+    width: 270px;
+    height: 23px;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* margin-top: -7px; */
+    display: inline-block;
+    background-size: cover;
+    position: absolute;
+    bottom: 0px;
+}
+div.StoryTab {
+    background-image: url(css/Images/Library/library-selected.png);
+}
+div.FilterTab
+{
+    background-image:url(css/Images/Library/all-cards-selected.png);
+    }
+
+div.Library-Selector div.Title {
+    display: inline-block;
+    width: 45%;
+}
+div.Title {
+    height: 19px;
+    line-height: 30px;
+    text-align: center;
+    margin: 0px;
+    color: #fff;
+    font-family: ElectraLH-BoldDisplay;
+    font-size: 8.8pt;
+    letter-spacing: 1px;
+}
+    </style>
+
+    <div class="Search-Filter">
+
+        <div class="logo"></div>
+
+        <template is="dom-if" if="{{isFilter}}">
+            <card-filter current="{{filter}}"></card-filter>
+        </template>
+
+        <template is="dom-if" if="{{isStory}}">
+          <story-list></story-list>
+        </template>
+
+        <div class$="Library-Selector {{tab}}Tab">
+            <input on-change="tabChange" type="radio" style="display:none" id="storyBtn" name="cardsbutton" value="Story">
+            <input on-change="tabChange" type="radio" style="display:none" id="filterBtn" name="cardsbutton" value="Filter">
+            <div class="Title"><label for="storyBtn">STORY</label></div>
+            <div class="Title"><label for="filterBtn">FILTER</label></div>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "alteil-drawer",
+
+            properties: {
+              tab: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true,
+                value: "Story"
+              },
+              isFilter: {
+                type: Boolean,
+                notify: true,
+                value: false
+              },
+              isStory: {
+                type: Boolean,
+                notify: true,
+                value: true
+              },
+              filter: {
+                  type: Object,
+                  notify: true,
+                  reflectToAttribute: true
+              }
+            },
+            tabChange: function(e) {
+              console.log("tabchange" + e)
+              this.set('tab', e.srcElement.value);
+              if (this.tab == 'Filter') {
+                this.set('isFilter', true);
+                this.set('isStory', false);
+              }
+              else {
+                this.set('isFilter', false);
+                this.set('isStory', true);
+              }
+            }
+        });
+    </script>
+</dom-module>
